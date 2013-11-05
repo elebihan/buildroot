@@ -1,0 +1,21 @@
+#!/bin/sh
+# system one time tasks
+
+PATH=/command:/sbin:/bin:/usr/sbin:/usr/bin
+
+echo "Mouting file systems"
+mount -t proc proc /proc
+mount -o remount,rw /
+mkdir -p /dev/pts
+mkdir -p /dev/shm
+mount -a
+
+echo "Setting hostname"
+hostname -F /etc/hostname
+
+echo "Starting mdev"
+echo /sbin/mdev >/proc/sys/kernel/hotplug
+mdev -s
+
+touch /etc/runit/stopit
+chmod 0 /etc/runit/stopit

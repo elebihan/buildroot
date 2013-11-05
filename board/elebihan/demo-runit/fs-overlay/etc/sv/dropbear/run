@@ -1,0 +1,3 @@
+#!/bin/sh
+exec 2>&1
+exec tcpsvd -v -i./peers 0 22 dropbear -i -E
