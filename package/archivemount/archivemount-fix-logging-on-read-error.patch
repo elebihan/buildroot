@@ -1,0 +1,25 @@
+diff -aburN archivemount-0.8.3.orig/archivemount.c archivemount-0.8.3/archivemount.c
+--- archivemount-0.8.3.orig/archivemount.c	2013-10-24 06:52:59.000000000 +0200
++++ archivemount-0.8.3/archivemount.c	2013-11-06 13:04:10.000000000 +0100
+@@ -1123,9 +1123,7 @@
+ 					int skip = offset > MAXBUF ? MAXBUF : offset;
+ 					ret = archive_read_data(
+ 							archive, trash, skip );
+-					if( ret == ARCHIVE_FATAL
+-							|| ret == ARCHIVE_WARN
+-							|| ret == ARCHIVE_RETRY )
++					if( ret < 0 )
+ 					{
+ 						log( "ar_read (skipping offset): %s",
+ 							archive_error_string( archive ) );
+@@ -1142,9 +1140,7 @@
+ 				}
+ 				/* read data */
+ 				ret = archive_read_data( archive, buf, size );
+-				if( ret == ARCHIVE_FATAL
+-						|| ret == ARCHIVE_WARN
+-						|| ret == ARCHIVE_RETRY )
++				if( ret < 0 )
+ 				{
+ 					log( "ar_read (reading data): %s",
+ 						archive_error_string( archive ) );

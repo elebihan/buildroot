@@ -1,0 +1,17 @@
+config BR2_PACKAGE_ARCHIVEMOUNT
+	bool "archivemount (FUSE)"
+	select BR2_PACKAGE_LIBFUSE
+	select BR2_PACKAGE_LIBARCHIVE
+	depends on BR2_USE_WCHAR # libarchive
+	depends on BR2_TOOLCHAIN_HAS_THREADS # libfuse
+	depends on BR2_USE_MMU # libfuse
+	depends on !BR2_PREFER_STATIC_LIB # libfuse
+	help
+	  Implements a file system for accessing archives
+	  (like tar.gz or zip) using FUSE API.
+
+	  http://www.cybernoia.de/software/archivemount.html
+
+comment "archivemount needs a toolchain w/ threads, wchar, dynamic library"
+	depends on (!BR2_TOOLCHAIN_HAS_THREADS || BR2_PREFER_STATIC_LIB \
+		    || !BR2_USE_WCHAR)
