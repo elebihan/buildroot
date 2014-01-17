@@ -1,0 +1,15 @@
+config BR2_PACKAGE_PYTHON_PYGOBJECT
+	bool "python-pygobject"
+	select BR2_PACKAGE_LIBGLIB2
+	depends on BR2_PACKAGE_PYTHON
+	depends on BR2_USE_WCHAR # libglib2
+	depends on BR2_TOOLCHAIN_HAS_THREADS # libglib2
+	depends on BR2_USE_MMU # libglib2
+	help
+	  Bindings for GLib, GObject and GIO.
+
+	  http://pygtk.org/
+
+comment "python-gobject needs a toolchain w/ wchar, threads"
+	depends on BR2_USE_MMU
+	depends on !BR2_USE_WCHAR || !BR2_TOOLCHAIN_HAS_THREADS
