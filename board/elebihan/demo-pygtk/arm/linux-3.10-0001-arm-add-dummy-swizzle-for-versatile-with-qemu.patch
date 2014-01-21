@@ -1,0 +1,30 @@
+From fd7576709f79e005bdd866f44556418487e81753 Mon Sep 17 00:00:00 2001
+From: Eric Le Bihan <eric.lebihan@sagemcom.com>
+Date: Thu, 5 Sep 2013 16:57:51 +0200
+Subject: [PATCH] arm: add dummy swizzle for versatile with qemu
+
+---
+ arch/arm/mach-versatile/pci.c |    6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/arch/arm/mach-versatile/pci.c b/arch/arm/mach-versatile/pci.c
+index 3617419..5a76241 100644
+--- a/arch/arm/mach-versatile/pci.c
++++ b/arch/arm/mach-versatile/pci.c
+@@ -351,7 +351,13 @@ static int __init versatile_map_irq(const struct pci_dev *dev, u8 slot, u8 pin)
+ 	return irq;
+ }
+ 
++static u8 versatile_swizzle(struct pci_dev *dev, u8 *pinp)
++{
++	return 0;
++}
++
+ static struct hw_pci versatile_pci __initdata = {
++	.swizzle		= versatile_swizzle,
+ 	.map_irq		= versatile_map_irq,
+ 	.nr_controllers		= 1,
+ 	.ops			= &pci_versatile_ops,
+-- 
+1.7.9.5
+

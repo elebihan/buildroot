@@ -1,0 +1,25 @@
+#!/usr/bin/env python2
+
+import pygtk
+pygtk.require('2.0')
+import gtk
+
+
+class Window(gtk.Window):
+    def __init__(self):
+        gtk.Window.__init__(self, gtk.WINDOW_TOPLEVEL)
+        self.set_default_size(160, 64)
+        self.set_title('Test PyGtk')
+        button = gtk.Button(label='Click me to close this window')
+        button.connect('clicked', self.on_button_clicked)
+        self.add(button)
+
+    def on_button_clicked(self, button):
+        gtk.main_quit()
+
+if __name__ == '__main__':
+    win = Window()
+    win.show_all()
+    gtk.main()
+
+# vim: ts=4 sts=4 sw=4 et ai
