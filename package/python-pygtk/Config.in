@@ -1,0 +1,11 @@
+config BR2_PACKAGE_PYTHON_PYGTK
+	bool "python-pygtk"
+	select BR2_PACKAGE_LIBGTK2
+	select BR2_PACKAGE_PYTHON_PYCAIRO
+	select BR2_PACKAGE_PYTHON_PYGOBJECT
+    select BR2_PACKAGE_LIBGLADE
+	depends on BR2_PACKAGE_PYTHON
+	help
+	  Python bindings for GTK+ 2.0
+
+	  http://www.pygtk.org
