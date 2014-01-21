@@ -1,0 +1,21 @@
+Index: py2cairo-1.10.0/configure.ac
+===================================================================
+--- py2cairo-1.10.0.orig/configure.ac	2011-05-01 12:43:49.000000000 +0200
++++ py2cairo-1.10.0/configure.ac	2014-01-21 14:24:01.000000000 +0100
+@@ -22,7 +22,7 @@
+ AC_CONFIG_SRCDIR([src/pycairo.h])
+ AC_CONFIG_HEADERS(src/config.h)
+ 
+-AM_INIT_AUTOMAKE([1.9.6 -Wall])
++AM_INIT_AUTOMAKE([1.9.6 -Wall foreign])
+ 
+ # Options ---
+ 
+@@ -31,6 +31,7 @@
+ 
+ # Checks for programs ---
+ AC_DISABLE_STATIC
++AM_PROG_AR
+ AC_PROG_LIBTOOL dnl required version (1.4) DON'T REMOVE - used by autogen.sh
+ dnl when using libtool 2.x create libtool early, because it's used in configure
+ m4_ifdef([LT_OUTPUT], [LT_OUTPUT])

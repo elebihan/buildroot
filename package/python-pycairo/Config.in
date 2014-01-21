@@ -1,0 +1,9 @@
+config BR2_PACKAGE_PYTHON_PYCAIRO
+	bool "python-pycairo"
+	select BR2_PACKAGE_CAIRO
+	select BR2_PACKAGE_PYTHON_XPYB
+	depends on BR2_PACKAGE_PYTHON
+	help
+	  Python bindings for cairo
+
+	  http://www.cairographics.org/pycairo
