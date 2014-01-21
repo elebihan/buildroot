@@ -1,0 +1,10 @@
+config BR2_PACKAGE_PYTHON_XPYB
+	bool "python-xpyb"
+	select BR2_PACKAGE_LIBXCB_
+	select BR2_PACKAGE_XCB_PROTO
+	depends on BR2_PACKAGE_XORG7
+	depends on BR2_PACKAGE_PYTHON
+	help
+	  X Python Binding, based on the X C Binding (XCB) library
+
+	  http://xcb.freedesktop.org/
