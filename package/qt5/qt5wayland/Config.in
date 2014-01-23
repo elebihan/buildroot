@@ -1,0 +1,20 @@
+config BR2_PACKAGE_QT5WAYLAND
+	bool "qt5wayland"
+	depends on BR2_PACKAGE_QT5BASE
+	depends on BR2_PACKAGE_QT5DECLARATIVE
+	depends on BR2_PACKAGE_WAYLAND
+	select BR2_PACKAGE_LIBXKBCOMMON
+	help
+	  Qt is a cross-platform application and UI framework for
+	  developers using C++.
+
+	  This package wraps the functionality of Wayland.
+
+	  http://qt.gitorious.org/qt/qtwayland
+
+if BR2_PACKAGE_QT5WAYLAND
+	config BR2_PACKAGE_QT5WAYLAND_COMPOSITOR_API
+	bool "Enable QtCompositor API"
+	help
+	  Enable the experimental QtCompositor API
+endif
