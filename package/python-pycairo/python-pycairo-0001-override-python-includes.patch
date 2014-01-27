@@ -1,0 +1,18 @@
+diff -aburN py2cairo-1.10.0.orig/configure.ac py2cairo-1.10.0/configure.ac
+--- py2cairo-1.10.0.orig/configure.ac	2011-05-01 12:43:49.000000000 +0200
++++ py2cairo-1.10.0/configure.ac	2014-01-27 12:08:21.450930626 +0100
+@@ -54,7 +54,13 @@
+       [AC_DEFINE([HAVE_XPYB], [1], [Define to 1 if xpyb is available])])
+ 
+ # Checks for header files ---
+-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
++if test -z "$PYTHON_INCLUDES"; then
++  AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
++else
++  AC_MSG_CHECKING([for python include dir])
++  AC_MSG_RESULT([$PYTHON_INCLUDES])
++  AC_SUBST([PYTHON_INCLUDES])  
++fi
+ 
+ # checks for types and compilers ---
+ AC_C_CONST
