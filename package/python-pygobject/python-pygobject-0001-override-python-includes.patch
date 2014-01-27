@@ -1,0 +1,19 @@
+diff -aburN pygobject-2.28.6.orig/configure.ac pygobject-2.28.6/configure.ac
+--- pygobject-2.28.6.orig/configure.ac	2011-06-13 18:33:56.000000000 +0200
++++ pygobject-2.28.6/configure.ac	2014-01-27 12:03:56.901618788 +0100
+@@ -101,7 +101,14 @@
+ 			  [AC_MSG_ERROR(too old)])
+ fi
+ 
+-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
++# Checks for header files ---
++if test -n "$PYTHON_INCLUDES"; then
++  AC_MSG_CHECKING([for python include dir])
++  AC_MSG_RESULT([$PYTHON_INCLUDES])
++  AC_SUBST([PYTHON_INCLUDES])  
++else
++  AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
++fi
+ 
+ AC_MSG_CHECKING([for PySignal_SetWakeupFd in Python.h])
+ old_CPPFLAGS=$CPPFLAGS

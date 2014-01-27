@@ -16,9 +16,15 @@ PYTHON_PYGOBJECT_DEPENDENCIES = host-pkgconf host-python python libglib2
 
 PYTHON_PYGOBJECT_INSTALL_STAGING = YES
 
+PYTHON_PYGOBJECT_AUTORECONF = YES
+
 PYTHON_PYGOBJECT_CONF_OPT = --enable-introspection=no \
 			  --enable-cairo=no \
 			  --disable-ffi
+
+PYTHON_PYGOBJECT_CONF_ENV = \
+	PYTHON_INCLUDES="-I${TARGET_DIR}/usr/include/python$(PYTHON_VERSION_MAJOR)"
+	
 
 # Fixup path for codegen and defs
 define PYTHON_PYGOBJECT_FIXUP_PC_FILE
