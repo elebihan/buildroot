@@ -23,7 +23,12 @@ PYTHON_PYGTK_DEPENDENCIES = \
 
 PYTHON_PYGTK_INSTALL_STAGING = YES
 
+PYTHON_PYGTK_AUTORECONF = YES
+
 PYTHON_PYGTK_CONF_OPT = --disable-glibtest \
-						--disable-numpy
+			--disable-numpy
+
+PYTHON_PYGTK_CONF_ENV = \
+	PYTHON_INCLUDES="-I${TARGET_DIR}/usr/include/python$(PYTHON_VERSION_MAJOR)"
 
 $(eval $(autotools-package))

@@ -1,0 +1,26 @@
+diff -aburN pygtk-2.24.0.orig/configure.ac pygtk-2.24.0/configure.ac
+--- pygtk-2.24.0.orig/configure.ac	2011-04-01 12:37:44.000000000 +0200
++++ pygtk-2.24.0/configure.ac	2014-01-27 12:18:26.577931267 +0100
+@@ -20,6 +20,7 @@
+ AC_INIT(pygtk, pygtk_version,
+         [http://bugzilla.gnome.org/enter_bug.cgi?product=pygtk])
+ AC_SUBST(ACLOCAL_AMFLAGS, "-I m4 -I .")
++AC_CONFIG_MACRO_DIR([m4])
+ 
+ AC_DEFINE(PYGTK_MAJOR_VERSION, pygtk_major_version, [PyGtk major version])
+ AC_SUBST(PYGTK_MAJOR_VERSION, pygtk_major_version)
+@@ -77,7 +78,13 @@
+ 
+ AM_PATH_PYTHON(2.3.5)
+ 
+-AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
++if test -n "$PYTHON_INCLUDES"; then
++  AC_MSG_CHECKING([for python include dir])
++  AC_MSG_RESULT([$PYTHON_INCLUDES])
++  AC_SUBST([PYTHON_INCLUDES])  
++else
++  AM_CHECK_PYTHON_HEADERS(,[AC_MSG_ERROR(could not find Python headers)])
++fi
+ 
+ AC_MSG_CHECKING([for PySignal_SetWakeupFd in Python.h])
+ py_prefix=`$PYTHON -c "import sys; print sys.prefix"`
