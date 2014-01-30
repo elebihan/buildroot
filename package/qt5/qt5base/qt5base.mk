@@ -106,6 +106,7 @@ endif
 ifeq ($(BR2_PACKAGE_RPI_USERLAND),y)
 QT5BASE_EGLFS_PLATFORM_HOOKS_SOURCES = \
 	$(@D)/mkspecs/devices/linux-rasp-pi-g++/qeglfshooks_pi.cpp
+QT5BASE_EGLFS_PLATFORM_HOOKS_LIBS = -lbcm_host -lvchostif
 endif
 else
 QT5BASE_CONFIGURE_OPTS += -no-opengl -no-eglfs
@@ -172,6 +173,7 @@ define QT5BASE_CONFIGURE_CMDS
 		-device-option BR_COMPILER_CFLAGS="$(TARGET_CFLAGS)" \
 		-device-option BR_COMPILER_CXXFLAGS="$(TARGET_CXXFLAGS)" \
 		-device-option EGLFS_PLATFORM_HOOKS_SOURCES="$(QT5BASE_EGLFS_PLATFORM_HOOKS_SOURCES)" \
+		-device-option EGLFS_PLATFORM_HOOKS_LIBS="$(QT5BASE_EGLFS_PLATFORM_HOOKS_LIBS)" \
 		-no-c++11 \
 		$(QT5BASE_CONFIGURE_OPTS) \
 	)
