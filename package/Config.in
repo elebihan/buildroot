@@ -221,6 +221,7 @@ endif
 
 	source "package/qt5/Config.in"
 	source "package/weston/Config.in"
+	source "package/xgxperf/Config.in"
 	source "package/x11r7/Config.in"
 
 comment "X applications"

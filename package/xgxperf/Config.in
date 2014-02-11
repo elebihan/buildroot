@@ -1,0 +1,8 @@
+config BR2_PACKAGE_XGXPERF
+	bool "xgxperf"
+	depends on BR2_PACKAGE_QT5
+	select BR2_PACKAGE_QT5SVG
+	help
+	  UI performance templates for Qt5 (based on C++)
+
+	  https://github.com/prabindh/xgxperf
