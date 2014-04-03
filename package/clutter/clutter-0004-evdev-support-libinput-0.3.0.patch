@@ -1,0 +1,116 @@
+From c6c1ef3bebbda36d8e98494ad1af0f4e7c72e007 Mon Sep 17 00:00:00 2001
+From: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+Date: Fri, 18 Jul 2014 11:15:14 +0200
+Subject: [PATCH] evdev: support libinput >= 0.3.0
+
+As described in [1], there has been an API break since libinput >=
+0.3.0. The evdev backend has been updated accordingly.
+
+[1] https://mail.gnome.org/archives/commits-list/2014-June/msg02163.html
+
+Signed-off-by: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+---
+ clutter/evdev/clutter-device-manager-evdev.c |   30 ++++++++------------------
+ clutter/evdev/clutter-input-device-evdev.h   |    2 --
+ 2 files changed, 9 insertions(+), 23 deletions(-)
+
+diff --git a/clutter/evdev/clutter-device-manager-evdev.c b/clutter/evdev/clutter-device-manager-evdev.c
+index 7d60d85..5d41dd5 100644
+--- a/clutter/evdev/clutter-device-manager-evdev.c
++++ b/clutter/evdev/clutter-device-manager-evdev.c
+@@ -375,8 +375,8 @@ notify_absolute_motion (ClutterInputDevice *input_device,
+ static void
+ notify_relative_motion (ClutterInputDevice *input_device,
+                         guint32             time_,
+-                        li_fixed_t          dx,
+-                        li_fixed_t          dy)
++                        double              dx,
++                        double              dy)
+ {
+   gfloat new_x, new_y;
+   ClutterInputDeviceEvdev *device_evdev;
+@@ -391,17 +391,9 @@ notify_relative_motion (ClutterInputDevice *input_device,
+   device_evdev = CLUTTER_INPUT_DEVICE_EVDEV (input_device);
+   seat = _clutter_input_device_evdev_get_seat (device_evdev);
+ 
+-  /* Append previously discarded fraction. */
+-  dx += device_evdev->dx_frac;
+-  dy += device_evdev->dy_frac;
+-
+   clutter_input_device_get_coords (seat->core_pointer, NULL, &point);
+-  new_x = point.x + li_fixed_to_int (dx);
+-  new_y = point.y + li_fixed_to_int (dy);
+-
+-  /* Save the discarded fraction part for next motion event. */
+-  device_evdev->dx_frac = (dx < 0 ? -1 : 1) * (0xff & dx);
+-  device_evdev->dy_frac = (dy < 0 ? -1 : 1) * (0xff & dy);
++  new_x = point.x + dx;
++  new_y = point.y + dy;
+ 
+   notify_absolute_motion (input_device, time_, new_x, new_y);
+ }
+@@ -997,7 +989,7 @@ process_device_event (ClutterDeviceManagerEvdev *manager_evdev,
+     case LIBINPUT_EVENT_POINTER_MOTION:
+       {
+         guint32 time;
+-        li_fixed_t dx, dy;
++        double dx, dy;
+         struct libinput_event_pointer *motion_event =
+           libinput_event_get_pointer_event (event);
+         device = libinput_device_get_user_data (libinput_device);
+@@ -1013,7 +1005,7 @@ process_device_event (ClutterDeviceManagerEvdev *manager_evdev,
+     case LIBINPUT_EVENT_POINTER_MOTION_ABSOLUTE:
+       {
+         guint32 time;
+-        li_fixed_t x, y;
++        double x, y;
+         gfloat stage_width, stage_height;
+         ClutterStage *stage;
+         struct libinput_event_pointer *motion_event =
+@@ -1032,10 +1024,7 @@ process_device_event (ClutterDeviceManagerEvdev *manager_evdev,
+                                                                stage_width);
+         y = libinput_event_pointer_get_absolute_y_transformed (motion_event,
+                                                                stage_height);
+-        notify_absolute_motion (device,
+-                                time,
+-                                li_fixed_to_double(x),
+-                                li_fixed_to_double(y));
++        notify_absolute_motion (device, time, x, y);
+ 
+         break;
+       }
+@@ -1050,7 +1039,7 @@ process_device_event (ClutterDeviceManagerEvdev *manager_evdev,
+         time = libinput_event_pointer_get_time (button_event);
+         button = libinput_event_pointer_get_button (button_event);
+         button_state = libinput_event_pointer_get_button_state (button_event) ==
+-                       LIBINPUT_POINTER_BUTTON_STATE_PRESSED;
++                       LIBINPUT_BUTTON_STATE_PRESSED;
+         notify_button (device, time, button, button_state);
+ 
+         break;
+@@ -1066,8 +1055,7 @@ process_device_event (ClutterDeviceManagerEvdev *manager_evdev,
+         device = libinput_device_get_user_data (libinput_device);
+ 
+         time = libinput_event_pointer_get_time (axis_event);
+-        value = li_fixed_to_double (
+-          libinput_event_pointer_get_axis_value (axis_event));
++        value = libinput_event_pointer_get_axis_value (axis_event);
+         axis = libinput_event_pointer_get_axis (axis_event);
+ 
+         switch (axis)
+diff --git a/clutter/evdev/clutter-input-device-evdev.h b/clutter/evdev/clutter-input-device-evdev.h
+index f87a39f..06f3d86 100644
+--- a/clutter/evdev/clutter-input-device-evdev.h
++++ b/clutter/evdev/clutter-input-device-evdev.h
+@@ -64,8 +64,6 @@ struct _ClutterInputDeviceEvdev
+ 
+   struct libinput_device *libinput_device;
+   ClutterSeatEvdev *seat;
+-  li_fixed_t dx_frac;
+-  li_fixed_t dy_frac;
+ };
+ 
+ GType                     _clutter_input_device_evdev_get_type        (void) G_GNUC_CONST;
+-- 
+1.7.10.4
+

@@ -590,6 +590,7 @@ endmenu
 menu "Graphics"
 	source "package/atk/Config.in"
 	source "package/cairo/Config.in"
+	source "package/clutter/Config.in"
 	source "package/cogl/Config.in"
 	source "package/fltk/Config.in"
 	source "package/fontconfig/Config.in"

@@ -1,0 +1,12 @@
+diff -aburN clutter-1.18.0.orig/gtk-doc.make clutter-1.18.0/gtk-doc.make
+--- clutter-1.18.0.orig/gtk-doc.make	2014-03-17 23:52:30.000000000 +0100
++++ clutter-1.18.0/gtk-doc.make	2014-04-03 16:26:51.000000000 +0200
+@@ -267,7 +267,7 @@
+ #
+ # Require gtk-doc when making dist
+ #
+-if HAVE_GTK_DOC
++if ENABLE_GTK_DOC
+ dist-check-gtkdoc: docs
+ else
+ dist-check-gtkdoc:
