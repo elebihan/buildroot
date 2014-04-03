@@ -1,0 +1,84 @@
+config BR2_PACKAGE_CLUTTER
+	bool "clutter"
+	depends on BR2_PACKAGE_COGL
+	depends on BR2_USE_WCHAR # glib2
+	depends on BR2_TOOLCHAIN_HAS_THREADS # glib2
+	depends on BR2_USE_MMU # glib2
+	depends on BR2_INSTALL_LIBSTDCPP # pango
+	select BR2_PACKAGE_LIBGLIB2
+	select BR2_PACKAGE_ATK
+	select BR2_PACKAGE_CAIRO
+	select BR2_PACKAGE_JSON_GLIB
+	select BR2_PACKAGE_PANGO
+	help
+	  Clutter is an open source software library for creating fast,
+	  compelling, portable, and dynamic graphical user interfaces.
+
+	  http://www.clutter-project.org
+
+comment "clutter needs a toolchain w/ wchar, threads, C++"
+	depends on BR2_USE_MMU
+	depends on !BR2_USE_WCHAR || !BR2_TOOLCHAIN_HAS_THREADS || \
+		!BR2_INSTALL_LIBSTDCPP
+
+if BR2_PACKAGE_CLUTTER
+
+menu "rendering backends"
+
+config BR2_PACKAGE_CLUTTER_BACKEND_EGL
+	bool "OpenGL EGL backend"
+	depends on BR2_PACKAGE_HAS_LIBEGL
+	help
+	  This enables the OpenGL EGL framebuffer backend.
+
+config BR2_PACKAGE_CLUTTER_BACKEND_WAYLAND
+	bool "Wayland backend"
+	depends on BR2_PACKAGE_WAYLAND
+	select BR2_PACKAGE_GDK_PIXBUF
+	help
+	  This enables the Wayland backend.
+
+config BR2_PACKAGE_CLUTTER_BACKEND_X11
+	bool "X11 backend"
+	depends on BR2_PACKAGE_XORG7
+	select BR2_PACKAGE_XLIB_LIBX11
+	select BR2_PACKAGE_XLIB_LIBXEXT
+	select BR2_PACKAGE_XLIB_LIBXCOMPOSITE
+	select BR2_PACKAGE_XLIB_LIBXFIXES
+	select BR2_PACKAGE_XLIB_LIBXDAMAGE
+	help
+	  This enables the X11 backend.
+
+endmenu
+
+menu "input event listeners"
+
+config BR2_PACKAGE_CLUTTER_INPUT_EVDEV
+	bool "evdev"
+	depends on BR2_PACKAGE_HAS_UDEV
+	select BR2_PACKAGE_LIBXKBCOMMON
+	select BR2_PACKAGE_LIBEVDEV
+	select BR2_PACKAGE_LIBINPUT
+	help
+	  This enables support for evdev input events.
+
+comment "evdev support needs udev /dev management"
+	depends on !BR2_PACKAGE_HAS_UDEV
+
+config BR2_PACKAGE_CLUTTER_INPUT_XINPUT
+	bool "xinput"
+	depends on BR2_PACKAGE_XORG7
+	select BR2_PACKAGE_XLIB_LIBXI
+	help
+	  This enables support for xinput input events.
+
+endmenu
+
+config BR2_PACKAGE_CLUTTER_INSTALL_DEMOS
+	bool "install demos"
+	select BR2_PACKAGE_GDK_PIXBUF
+	select BR2_PACKAGE_CAIRO_PNG
+	help
+	  Install the demo programs
+
+endif

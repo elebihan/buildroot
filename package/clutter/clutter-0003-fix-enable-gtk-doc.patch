@@ -1,0 +1,11 @@
+--- clutter-1.18.0.orig/configure	2014-03-18 15:15:44.000000000 +0100
++++ clutter-1.18.0/configure	2014-04-03 17:39:30.000000000 +0200
+@@ -15912,7 +15912,7 @@
+ #
+ # we use autogen.sh as it exists only inside the Git clones, and it
+ # is not packaged into tarballs.
+- if test "x$enable_gtk_doc" = "xyes" || test ! -f "autogen.sh"; then
++ if test "x$enable_gtk_doc" = "xyes" ; then
+   BUILD_GTK_DOC_TRUE=
+   BUILD_GTK_DOC_FALSE='#'
+ else
