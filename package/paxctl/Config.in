@@ -1,0 +1,19 @@
+config BR2_PACKAGE_PAXCTL
+	bool "paxctl"
+	help
+	  paxctl is a tool that allows PaX flags to be modified on a
+	  per-binary basis. It is part of Grsecurity.
+
+	  Grsecurity is a set of patches for hardening the Linux kernel.
+	  It provides:
+
+	  - PaX: protection for memory pages.
+	  - Role Based Access Control: a mechanism to restrict access to
+	    objects (files, sockets, ...) by subjects (processes) based on
+	    roles.
+	  - and more!
+
+	  This program needs a properly patched and configured kernel to have
+	  any effect.
+
+	  http://pax.grsecurity.net
