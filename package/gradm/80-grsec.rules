@@ -1,0 +1,3 @@
+ACTION!="add|change", GOTO="permissions_end"
+KERNEL=="grsec" MODE="0622"
+LABEL="permissions_end"

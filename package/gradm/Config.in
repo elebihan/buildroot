@@ -1,0 +1,31 @@
+config BR2_PACKAGE_GRADM
+	bool "gradm"
+	depends on BR2_LARGEFILE
+	depends on BR2_USE_MMU # fork()
+	depends on !BR2_avr32
+	help
+	  Administrative interface for the grsecurity Role Based Access
+	  Control system.
+
+	  Grsecurity is a set of patches for hardening the Linux kernel.
+	  It provides:
+
+	  - PaX: protection for memory pages.
+	  - Role Based Access Control: a mechanism to restrict access to
+	    objects (files, sockets, ...) by subjects (processes) based on
+	    roles.
+	  - and more!
+
+	  This package provides gradm, a tool to manage the RBAC policy.
+
+	  If the linux-pam package is selected, PAM authentification support
+	  will be added (gradm_pam).
+
+	  Your kernel needs to be properly patched and configured for this
+	  program to have any effect.
+
+	  http://grsecurity.net/
+
+comment "gradm needs a toolchain w/ largefile"
+	depends on BR2_USE_MMU
+	depends on !BR2_LARGEFILE

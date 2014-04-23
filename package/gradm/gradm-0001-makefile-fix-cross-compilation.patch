@@ -1,0 +1,95 @@
+Makefile: fix cross-compilation.
+
+The Makefile has been modified to allow a better cross-compilation:
+
+- the harcoded paths to Lex and Yacc have been replaced by a check
+- a variable has been added to set the path for PAM header files.
+
+Signed-off-by: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+---
+
+Index: gradm/Makefile
+===================================================================
+--- gradm.orig/Makefile
++++ gradm/Makefile
+@@ -6,35 +6,47 @@
+ # see COPYRIGHT and LICENSE files for more information                       #
+ ##############################################################################
+
+-GRADM_BIN=gradm
+-GRADM_PAM=gradm_pam
+-GRSEC_DIR=/etc/grsec
+-
+-LLEX=/usr/bin/lex
+-FLEX=/usr/bin/flex
+-LEX := $(shell if [ -x $(FLEX) ]; then echo $(FLEX); else echo $(LLEX); fi)
+-LEXFLAGS=-Cfa -B
+-#ubuntu broke byacc for who knows why, disable it
+-#BYACC=/usr/bin/byacc
+-BISON=/usr/bin/bison
+-#YACC := $(shell if [ -x $(BYACC) ]; then echo $(BYACC); else echo $(BISON); fi)
+-YACC=$(BISON)
+-MKNOD=/bin/mknod
+-#for dietlibc
+-#CC=/usr/bin/diet /usr/bin/gcc
+-CC=/usr/bin/gcc
+-FIND=/usr/bin/find
+-STRIP=/usr/bin/strip
+-LIBS := $(shell if [ "`uname -m`" != "sparc64" -a "`uname -m`" != "x86_64" ]; then echo "-lfl" ; else echo "" ; fi)
++GRADM_BIN = gradm
++GRADM_PAM = gradm_pam
++GRSEC_DIR ?= /etc/grsec
++PAM_INCLUDE_DIR ?= /usr/include
++
++LLEX_VERSION := $(shell lex --version 2>/dev/null)
++FLEX_VERSION := $(shell flex --version 2>/dev/null)
++ifneq ($(FLEX_VERSION),)
++	LEX := $(shell which flex)
++else ifneq ($(LLEX_VERSION),)
++	LEX := $(shell which lex)
++	LEXLIBS = -lfl
++else
++	$(error "Lex/Flex is missing")
++endif
++
++LEXFLAGS = -Cfa -B
++
++BISON_VERSION := $(shell bison --version 2>/dev/null)
++BYACC_VERSION := $(shell byacc --version 2>/dev/null)
++ifneq ($(BISON_VERSION),)
++	YACC = $(shell which bison)
++else ifneq ($(BYACC_VERSION),)
++	YACC = $(shell which byacc)
++else
++	$(error "Yacc/Bison is missing")
++endif
++
++LIBS := $(LEXLIBS)
++
++CC ?= gcc
++STRIP ?= strip
++MKNOD = mknod
++FIND = find
+ OPT_FLAGS := -O2
+-# for older versions of grsecurity, comment the above line and uncomment the below:
+-#OPT_FLAGS := $(shell if [ "`uname -m`" != "sparc64" ] && [ "`uname -m`" != "x86_64" ]; then echo "-O2" ; else echo "-O2 -m64" ; fi)
+ CFLAGS := $(OPT_FLAGS) -Wcast-qual -DGRSEC_DIR=\"$(GRSEC_DIR)\" -D_LARGEFILE64_SOURCE
+-LDFLAGS=
++LDFLAGS :=
+ INSTALL = /usr/bin/install -c
+
+ # FHS
+-MANDIR=/usr/share/man
++MANDIR = /usr/share/man
+ # older MANDIR
+ #MANDIR=/usr/man
+ DESTDIR=
+@@ -57,7 +69,7 @@ $(GRADM_BIN): $(OBJECTS) gradm.h gradm_d
+ 	$(CC) $(CFLAGS) -o $@ $(OBJECTS) $(LIBS) $(LDFLAGS)
+
+ $(GRADM_PAM): gradm_pam.c gradm.h gradm_defs.h gradm_func.h
+-	@if [ ! -f /usr/include/security/pam_appl.h ] ; then \
++	@if [ ! -f $(PAM_INCLUDE_DIR)/security/pam_appl.h ] ; then \
+ 		echo "Unable to detect PAM headers, disabling PAM support." ; \
+ 	else \
+ 		$(CC) $(CFLAGS) -o $@ gradm_pam.c -lpam -lpam_misc $(LDFLAGS) ; \
