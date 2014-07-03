@@ -39,6 +39,18 @@ endef
 
 ifeq ($(BR2_PACKAGE_QT5WAYLAND_COMPOSITOR_API),y)
 QT5WAYLAND_QMAKE_OPT += CONFIG+=wayland-compositor
+define QT5WAYLAND_INSTALL_COMPOSITOR
+	$(INSTALL) -d $(TARGET_DIR)/usr/lib/qt/plugins/wayland-graphics-integration/client
+	cp -dpf $(@D)/plugins/wayland-graphics-integration/client/*.so \
+		$(TARGET_DIR)/usr/lib/qt/plugins/wayland-graphics-integration/client/
+	$(INSTALL) -d $(TARGET_DIR)/usr/lib/qt/plugins/wayland-graphics-integration/server
+	cp -dpf $(@D)/plugins/wayland-graphics-integration/server/*.so \
+		$(TARGET_DIR)/usr/lib/qt/plugins/wayland-graphics-integration/server/
+	cp -dpf $(@D)/lib/libQt5*.so* $(TARGET_DIR)/usr/lib/
+endif
+define QT5WAYLAND_UNINSTALL_COMPOSITOR
+	$(RM) -f $(TARGET_DIR)/usr/lib/libQt5Compositor.so
+endef
 endif
 
 define QT5WAYLAND_CONFIGURE_CMDS
@@ -67,19 +79,13 @@ endef
 define QT5WAYLAND_INSTALL_TARGET_CMDS
 	$(INSTALL) -d $(TARGET_DIR)/usr/lib/qt/plugins/platforms
 	cp -dpf $(@D)/plugins/platforms/*.so $(TARGET_DIR)/usr/lib/qt/plugins/platforms
-	$(INSTALL) -d $(TARGET_DIR)/usr/lib/qt/plugins/wayland-graphics-integration/client
-	cp -dpf $(@D)/plugins/wayland-graphics-integration/client/*.so \
-		$(TARGET_DIR)/usr/lib/qt/plugins/wayland-graphics-integration/client/
-	$(INSTALL) -d $(TARGET_DIR)/usr/lib/qt/plugins/wayland-graphics-integration/server
-	cp -dpf $(@D)/plugins/wayland-graphics-integration/server/*.so \
-		$(TARGET_DIR)/usr/lib/qt/plugins/wayland-graphics-integration/server/
-	cp -dpf $(@D)/lib/libQt5*.so* $(TARGET_DIR)/usr/lib/
+	$(QT5WAYLAND_INSTALL_COMPOSITOR)
 endef
 
 define QT5WAYLAND_UNINSTALL_STAGING_CMDS
 	$(RM) -rf $(TARGET_DIR)/usr/lib/qt/plugins/platforms
 	$(RM) -f $(TARGET_DIR)/usr/lib/libQt5WaylandClient.so
-	$(RM) -f $(TARGET_DIR)/usr/lib/libQt5Compositor.so
+	$(QT5WAYLAND_UNINSTALL_COMPOSITOR)
 endef
 
 $(eval $(generic-package))
