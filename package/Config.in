@@ -1030,6 +1030,7 @@ endif
 	source "package/ngrep/Config.in"
 	source "package/nmap/Config.in"
 	source "package/noip/Config.in"
+	source "package/nsd/Config.in"
 	source "package/ntp/Config.in"
 	source "package/nuttcp/Config.in"
 	source "package/odhcploc/Config.in"

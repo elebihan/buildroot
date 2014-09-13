@@ -1,0 +1,54 @@
+#!/bin/sh
+#
+# Starts nsd Name Server Daemon
+#
+
+PATH=/sbin:/bin:/usr/sbin:/usr/bin
+NAME=nsd
+DESC="Name Server Daemon"
+DAEMON=/usr/sbin/nsd
+DAEMONCTL=/usr/sbin/nsdc
+DAEMON_ARGS="-c /etc/nsd/nsd.conf"
+PIDFILE=/var/run/$NAME.pid
+
+test -r /etc/default/$NAME && . /etc/default/$NAME
+
+DAEMON_ARGS="$DAEMON_ARGS $OPTIONS"
+
+do_start() {
+    start-stop-daemon -S -q -p $PIDFILE --exec $DAEMON -- $DAEMON_ARGS
+}
+
+do_stop() {
+    start-stop-daemon -K -q -p $PIDFILE
+}
+
+do_reload() {
+    $DAEMONCTL reload >/dev/null
+}
+
+case "$1" in
+    start)
+        echo -n "Starting $DESC: "
+        do_start
+        [ $? == 0 ] && echo "OK" || echo "FAIL"
+        ;;
+    stop)
+        echo -n "Stopping $DESC: "
+        do_stop
+        [ $? == 0 ] && echo "OK" || echo "FAIL"
+        ;;
+    reload)
+        do_reload
+        ;;
+    restart)
+        do_stop
+        sleep 1
+        do_start
+        ;;
+     *)
+        echo "Usage: $0 {start|stop|restart|reload}"
+        exit 1
+esac
+
+exit $?
