@@ -1,0 +1,15 @@
+config BR2_PACKAGE_UNBOUND
+	bool "unbound"
+	depends on BR2_USE_MMU # fork()
+	depends on BR2_TOOLCHAIN_HAS_THREADS
+	depends on !BR2_PREFER_STATIC_LIB # dlopen()
+	select BR2_PACKAGE_EXPAT
+	help
+	  Unbound is a validating, recursive, and caching DNS resolver.
+
+	  http://unbound.net/
+
+comment "unbound needs a toolchain w/ threads, dynamic library"
+	depends on BR2_USE_MMU
+	depends on !BR2_TOOLCHAIN_HAS_THREADS
+	depends on BR2_PREFER_STATIC_LIB

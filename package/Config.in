@@ -1084,6 +1084,7 @@ endif
 	source "package/tvheadend/Config.in"
 	source "package/udpcast/Config.in"
 	source "package/ulogd/Config.in"
+	source "package/unbound/Config.in"
 	source "package/ushare/Config.in"
 	source "package/ussp-push/Config.in"
 	source "package/vde2/Config.in"
