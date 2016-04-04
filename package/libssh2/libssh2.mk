@@ -38,3 +38,4 @@ LIBSSH2_CONF_OPTS += --without-libz
 endif
 
 $(eval $(autotools-package))
+$(eval $(host-autotools-package))
