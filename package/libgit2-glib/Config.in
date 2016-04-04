@@ -1,0 +1,17 @@
+config BR2_PACKAGE_LIBGIT2_GLIB
+	bool "libgit2-glib"
+	depends on BR2_USE_WCHAR # glib2
+	depends on BR2_TOOLCHAIN_HAS_THREADS # glib2
+	depends on BR2_USE_MMU # glib2
+	select BR2_PACKAGE_LIBGLIB2
+	select BR2_PACKAGE_LIBGIT2
+
+	help
+	  libgit2-glib is a glib wrapper library around the libgit2 git access
+	  library.
+
+	  https://git.gnome.org/browse/libgit2-glib
+
+comment "libgit2-glib needs a toolchain w/ wchar, threads"
+	depends on BR2_USE_MMU
+	depends on !BR2_USE_WCHAR || !BR2_TOOLCHAIN_HAS_THREADS

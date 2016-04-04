@@ -1,0 +1,87 @@
+From b10a9ab6699db4c290996cc423dd0e68bafaeb50 Mon Sep 17 00:00:00 2001
+From: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+Date: Sat, 9 Apr 2016 15:46:49 +0200
+Subject: [PATCH 2/2] Use AC_CACHE_VAL to wrap AC_TRY_RUN
+
+Wrap the call to AC_TRY_RUN, used to check if libgit2 is built with SSH
+support, with AC_CACHE_VAL, thus allowing overriding the result with the
+environment variable "ac_cv_git_ssh" (useful when cross-compiling).
+
+Signed-off-by: Eric Le Bihan <eric.le.bihan.dev@free.fr>
+---
+ configure.ac | 42 ++++++++++++++++++++++--------------------
+ 1 file changed, 22 insertions(+), 20 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 3ba9407..cc8b765 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -96,30 +96,28 @@ if test "x$enable_ssh" != "xno"; then
+     CFLAGS="${CFLAGS} ${LIBGIT2_GLIB_CFLAGS}"
+     LIBS="${LIBS} ${LIBGIT2_GLIB_LIBS}"
+ 
+-    AC_TRY_RUN([
+-            #include <git2.h>
+-            int
+-            main(int argc, const char *argv[])
+-            {
+-                    git_libgit2_init ();
+-                    return ((git_libgit2_features() & GIT_FEATURE_SSH) != 0) ? 0 : 1;
+-            }
+-    ],[
+-        AC_MSG_RESULT([yes])
+-        git_ssh=yes
+-    ],[
+-        AC_MSG_RESULT([no])
+-        git_ssh=no
+-        if test "x$enable_ssh" = "xyes"; then
+-            AC_MSG_ERROR([libgit2 ssh support was requested, but not found])
+-        fi
+-    ])
++    AC_CACHE_VAL(ac_cv_git_ssh,
++                 AC_TRY_RUN([
++                         #include <git2.h>
++                         int
++                         main(int argc, const char *argv[])
++                         {
++                                 git_libgit2_init ();
++                                 return ((git_libgit2_features() & GIT_FEATURE_SSH) != 0) ? 0 : 1;
++                         }
++                 ],
++                 ac_cv_git_ssh=yes,
++                 ac_cv_git_ssh=no,
++                 ac_cv_git_ssh=no)
++    )
++
++    AC_MSG_RESULT($ac_cv_git_ssh)
+ 
+     CFLAGS="${cflags_save}"
+     LIBS="${libs_save}"
+ fi
+ 
+-if test "x$git_ssh" = "xyes"; then
++if test "$ac_cv_git_ssh" = "yes"; then
+ 	LIBGIT2_GLIB_CFLAGS="${LIBGIT2_GLIB_CFLAGS} -DGIT_SSH=1"
+ 	LIBGIT2_GLIB_PCCFLAGS="-DGIT_SSH=1"
+ 
+@@ -127,12 +125,16 @@ if test "x$git_ssh" = "xyes"; then
+ #include <libgit2-glib/ggit-cred-ssh-key-from-agent.h>
+ #include <libgit2-glib/ggit-cred-ssh-interactive.h>
+ "
++else
++    if test "x$enable_ssh" = "xyes"; then
++        AC_MSG_ERROR([libgit2 ssh support was requested, but not found])
++    fi
+ fi
+ 
+ AC_SUBST(GGIT_SSH_INCLUDES)
+ AC_SUBST(LIBGIT2_GLIB_PCCFLAGS)
+ 
+-AM_CONDITIONAL(GIT_SSH, test x"$git_ssh" = "xyes")
++AM_CONDITIONAL(GIT_SSH, test "$ac_cv_git_ssh" = "yes")
+ 
+ dnl ===========================================================================
+ dnl Check for python
+-- 
+2.4.11
+
