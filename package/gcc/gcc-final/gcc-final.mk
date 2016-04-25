@@ -21,6 +21,36 @@ endif
 
 HOST_GCC_FINAL_POST_PATCH_HOOKS += HOST_GCC_APPLY_PATCHES
 
+ifeq ($(BR2_TOOLCHAIN_BUILDROOT_DLANG),y)
+ifeq ($(BR2_GCC_VERSION_4_8_X),y)
+HOST_GCC_FINAL_GDC_VERSION = v2.066.1r2_gcc4.8
+else ifeq ($(BR2_GCC_VERSION_4_9_X),y)
+HOST_GCC_FINAL_GDC_VERSION = v2.066.1r2_gcc4.9
+else ifeq ($(BR2_GCC_VERSION_5_X),y)
+HOST_GCC_FINAL_GDC_VERSION = v2.066.1r2_gcc5
+else
+$(error This version of GCC does not suport D)
+endif
+HOST_GCC_FINAL_GDC_SOURCE = $(HOST_GCC_FINAL_GDC_VERSION).tar.gz
+HOST_GCC_FINAL_EXTRA_DOWNLOADS = \
+	$(call github,D-Programming-GDC,GDC,$(HOST_GCC_FINAL_GDC_VERSION)).tar.gz
+
+define HOST_GCC_EXTRACT_GDC
+	$(INSTALL) -d $(@D)/gdc
+	$(call suitable-extractor,$(HOST_GCC_FINAL_GDC_SOURCE)) $(DL_DIR)/$(HOST_GCC_FINAL_GDC_SOURCE) | \
+	$(TAR) --strip-components=1 -C $(@D)/gdc $(TAR_OPTIONS) -
+endef
+
+HOST_GCC_FINAL_POST_EXTRACT_HOOKS += HOST_GCC_EXTRACT_GDC
+
+define HOST_GCC_SETUP_GDC
+	(cd $(@D)/gdc; ./setup-gcc.sh $(@D))
+endef
+
+HOST_GCC_FINAL_PRE_CONFIGURE_HOOKS += HOST_GCC_SETUP_GDC
+
+endif
+
 # gcc doesn't support in-tree build, so we create a 'build'
 # subdirectory in the gcc sources, and build from there.
 HOST_GCC_FINAL_SUBDIR = build
@@ -54,6 +84,7 @@ endef
 # Languages supported by the cross-compiler
 GCC_FINAL_CROSS_LANGUAGES-y = c
 GCC_FINAL_CROSS_LANGUAGES-$(BR2_INSTALL_LIBSTDCPP) += c++
+GCC_FINAL_CROSS_LANGUAGES-$(BR2_TOOLCHAIN_BUILDROOT_DLANG) += d
 GCC_FINAL_CROSS_LANGUAGES-$(BR2_TOOLCHAIN_BUILDROOT_FORTRAN) += fortran
 GCC_FINAL_CROSS_LANGUAGES = $(subst $(space),$(comma),$(GCC_FINAL_CROSS_LANGUAGES-y))
 
