@@ -1,0 +1,87 @@
+config BR2_PACKAGE_COGL
+	bool "cogl"
+	depends on BR2_PACKAGE_HAS_LIBGL || BR2_PACKAGE_HAS_LIBGLES
+	depends on BR2_PACKAGE_XORG7 || BR2_PACKAGE_HAS_LIBWAYLAND_EGL
+	depends on BR2_USE_WCHAR # glib2
+	depends on BR2_TOOLCHAIN_HAS_THREADS # glib2
+	depends on BR2_USE_MMU # glib2
+	select BR2_PACKAGE_LIBGLIB2
+	help
+	  Cogl is an open source GPU graphics and utilities API providing:
+
+	  - a hardware accelerated graphics API.
+	  - math utilities (matrices, vectors, ...).
+	  - texturing utilities.
+
+	  http://www.cogl3d.org/
+
+if BR2_PACKAGE_COGL
+
+menu "drivers"
+
+config BR2_PACKAGE_COGL_OPENGL_GL
+	bool "OpenGL support"
+	default y
+	depends on BR2_PACKAGE_HAS_LIBGL
+	help
+	  This enables OpenGL support.
+
+config BR2_PACKAGE_COGL_OPENGL_ES
+	bool "OpenGL ES support"
+	default y
+	depends on BR2_PACKAGE_HAS_LIBGLES
+	help
+	  This enables OpenGL ES support.
+
+endmenu
+
+menu "window systems"
+
+config BR2_PACKAGE_COGL_GLX
+	bool "GLX support"
+	depends on BR2_PACKAGE_HAS_LIBGL
+	depends on BR2_PACKAGE_XORG7
+	help
+	  This enables GLX support.
+
+config BR2_PACKAGE_COGL_SDL
+	bool "SDL support"
+	depends on BR2_PACKAGE_SDL
+	help
+	  This enables SDL support.
+
+config BR2_PACKAGE_COGL_SDL2
+	bool "SDL2 support"
+	depends on BR2_PACKAGE_SDL2
+	help
+	  This enables SDL2 support.
+
+config BR2_PACKAGE_COGL_EGL_XLIB
+	bool "Xlib EGL support"
+	depends on BR2_PACKAGE_HAS_LIBEGL
+	depends on BR2_PACKAGE_XORG7
+	select BR2_PACKAGE_XLIB_LIBXDAMAGE
+	select BR2_PACKAGE_XLIB_LIBXRENDER
+	select BR2_PACKAGE_XLIB_LIBXFIXES
+	select BR2_PACKAGE_XLIB_LIBXCOMPOSITE
+	help
+	  This enables Xlib EGL support.
+
+config BR2_PACKAGE_COGL_EGL_WAYLAND
+	bool "Wayland EGL support"
+	depends on BR2_PACKAGE_HAS_LIBWAYLAND_EGL
+	help
+	  This enables Wayland EGL support.
+
+endmenu
+
+config BR2_PACKAGE_COGL_INSTALL_DEMOS
+	bool "install demos"
+	help
+	  Install the demo programs
+
+endif
+
+comment "cogl needs a toolchain w/ wchar, threads"
+	depends on BR2_USE_MMU
+	depends on !BR2_USE_WCHAR || !BR2_TOOLCHAIN_HAS_THREADS
