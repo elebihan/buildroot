@@ -161,6 +161,13 @@ config BR2_PACKAGE_MESA3D_OPENGL_ES
 	  Use the Khronos OpenGL ES APIs. This is commonly used on embedded
 	  systems and represents a subset of the OpenGL API.
 
+config BR2_PACKAGE_MESA3D_WAYLAND_EGL
+	bool
+	default y
+	depends on BR2_PACKAGE_MESA3D_OPENGL_EGL
+	depends on BR2_PACKAGE_WAYLAND
+	select BR2_PACKAGE_HAS_LIBWAYLAND_EGL
+
 endif # BR2_PACKAGE_MESA3D_DRIVER
 
 config BR2_PACKAGE_PROVIDES_LIBEGL
@@ -168,6 +175,9 @@ config BR2_PACKAGE_PROVIDES_LIBEGL
 
 config BR2_PACKAGE_PROVIDES_LIBGLES
 	default "mesa3d" if BR2_PACKAGE_MESA3D_OPENGL_ES
+
+config BR2_PACKAGE_PROVIDES_LIBWAYLAND_EGL
+	default "mesa3d" if BR2_PACKAGE_MESA3D_WAYLAND_EGL
 
 endif # BR2_PACKAGE_MESA3D
 
