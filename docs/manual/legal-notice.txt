@@ -133,6 +133,9 @@ Buildroot, with the name used in the manifest files:
 * `Apache-2.0`:
   http://apache.org/licenses/LICENSE-2.0.html[
   Apache License, version 2.0];
+* `CC0`:
+  https://creativecommons.org/publicdomain/zero/1.0/legalcode[
+  Creative Commons CC0];
 
 [[legal-info-buildroot]]
 === Complying with the Buildroot license
