@@ -172,6 +172,17 @@ endchoice
 comment "/dev management using udev (from systemd)"
 	depends on BR2_INIT_SYSTEMD
 
+config BR2_SYSTEM_PREDICTABLE_NETIF_NAMES
+	bool "Predictable network interface names"
+	depends on BR2_PACKAGE_HAS_UDEV
+	default n
+	help
+	  udev can assign predictable, stable network interface names for all
+	  local Ethernet, WLAN and WWAN interfaces. This is a departure from
+	  the traditional interface naming scheme (eth0, eth1, etc).
+
+	  Say yes to active this naming scheme.
+
 config BR2_ROOTFS_DEVICE_TABLE
 	string "Path to the permission tables"
 	default "system/device_table.txt"

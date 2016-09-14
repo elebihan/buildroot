@@ -242,6 +242,17 @@ endif
 TARGET_FINALIZE_HOOKS += SKELETON_REMOUNT_RW
 endif # BR2_INIT_BUSYBOX || BR2_INIT_SYSV
 
+ifeq ($(BR2_SYSTEM_PREDICTABLE_NETIF_NAMES),y)
+define SKELETON_MANAGE_PREDITABLE_NETIF_NAMES
+	rm -f $(TARGET_DIR)/etc/udev/rules.d/80-net-setup-links.rules
+endef
+else
+define SKELETON_MANAGE_PREDITABLE_NETIF_NAMES
+	touch $(TARGET_DIR)/etc/udev/rules.d/80-net-setup-links.rules
+endef
+endif
+TARGET_FINALIZE_HOOKS += SKELETON_MANAGE_PREDITABLE_NETIF_NAMES
+
 endif # BR2_ROOTFS_SKELETON_DEFAULT
 
 $(eval $(generic-package))
