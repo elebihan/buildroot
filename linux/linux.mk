@@ -127,6 +127,12 @@ LINUX_POST_EXTRACT_HOOKS += LINUX_XTENSA_OVERLAY_EXTRACT
 LINUX_EXTRA_DOWNLOADS += $(ARCH_XTENSA_OVERLAY_URL)
 endif
 
+ifeq ($(BR2_TARGET_ROOTFS_MINIRAMFS),y)
+LINUX_INITRAMFS_CPIO = miniramfs.cpio
+else
+LINUX_INITRAMFS_CPIO = rootfs.cpio
+endif
+
 # We don't want to run depmod after installing the kernel. It's done in a
 # target-finalize hook, to encompass modules installed by packages.
 LINUX_MAKE_FLAGS = \
@@ -336,16 +342,16 @@ define LINUX_KCONFIG_FIXUP_CMDS
 		$(call KCONFIG_DISABLE_OPT,CONFIG_ARC_PAGE_SIZE_4K)
 		$(call KCONFIG_DISABLE_OPT,CONFIG_ARC_PAGE_SIZE_8K)
 		$(call KCONFIG_ENABLE_OPT,CONFIG_ARC_PAGE_SIZE_16K))
-	$(if $(BR2_TARGET_ROOTFS_CPIO),
+	$(if $(BR2_TARGET_ROOTFS_CPIO)$(BR2_TARGET_ROOTFS_MINIRAMFS),
 		$(call KCONFIG_ENABLE_OPT,CONFIG_BLK_DEV_INITRD))
 	# As the kernel gets compiled before root filesystems are
 	# built, we create a fake cpio file. It'll be
 	# replaced later by the real cpio archive, and the kernel will be
 	# rebuilt using the linux-rebuild-with-initramfs target.
-	$(if $(BR2_TARGET_ROOTFS_INITRAMFS),
+	$(if $(BR2_TARGET_ROOTFS_INITRAMFS)$(BR2_TARGET_ROOTFS_MINIRAMFS),
 		mkdir -p $(BINARIES_DIR)
-		touch $(BINARIES_DIR)/rootfs.cpio
-		$(call KCONFIG_SET_OPT,CONFIG_INITRAMFS_SOURCE,"$${BR_BINARIES_DIR}/rootfs.cpio")
+		touch $(BINARIES_DIR)/$(LINUX_INITRAMFS_CPIO)
+		$(call KCONFIG_SET_OPT,CONFIG_INITRAMFS_SOURCE,"$${BR_BINARIES_DIR}/$(LINUX_INITRAMFS_CPIO)")
 		$(call KCONFIG_SET_OPT,CONFIG_INITRAMFS_ROOT_UID,0)
 		$(call KCONFIG_SET_OPT,CONFIG_INITRAMFS_ROOT_GID,0))
 	$(if $(BR2_ROOTFS_DEVICE_CREATION_STATIC),,
