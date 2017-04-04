@@ -1,0 +1,22 @@
+config BR2_TARGET_ROOTFS_MINIRAMFS
+	bool "Create minimal companion ramfs"
+	depends on !BR2_TARGET_ROOTFS_INITRAMFS
+	select BR2_PACKAGE_BUSYBOX
+	help
+	  Generate a minimal ramfs suitable to finding, verifying and
+	  mounting the real rootfs stored in MTD or encrypted on a disk.
+
+if BR2_TARGET_ROOTFS_MINIRAMFS
+
+config BR2_TARGET_ROOTFS_MINIRAMFS_OVERLAY
+	string "Path to the ramfs overlay"
+	help
+	  Path to the directory to use as overlay for the minimal ramfs.
+
+config BR2_TARGET_ROOTFS_MINIRAMFS_INITRAMFS
+	bool "Use as initramfs"
+	depends on BR2_LINUX_KERNEL
+	help
+	  Use miniramfs as Linux initramfs.
+
+endif
