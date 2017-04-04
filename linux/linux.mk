@@ -156,6 +156,12 @@ LINUX_POST_EXTRACT_HOOKS += LINUX_XTENSA_OVERLAY_EXTRACT
 LINUX_EXTRA_DOWNLOADS += $(ARCH_XTENSA_OVERLAY_URL)
 endif
 
+ifeq ($(BR2_TARGET_ROOTFS_MINIRAMFS),y)
+LINUX_INITRAMFS_CPIO = miniramfs.cpio
+else
+LINUX_INITRAMFS_CPIO = rootfs.cpio
+endif
+
 # We don't want to run depmod after installing the kernel. It's done in a
 # target-finalize hook, to encompass modules installed by packages.
 # Disable building host tools with -Werror: newer gcc versions can be
@@ -409,11 +415,11 @@ endif
 # built, we create a fake cpio file. It'll be
 # replaced later by the real cpio archive, and the kernel will be
 # rebuilt using the linux-rebuild-with-initramfs target.
-ifeq ($(BR2_TARGET_ROOTFS_INITRAMFS),y)
+ifeq ($(BR2_TARGET_ROOTFS_INITRAMFS)$(BR2_TARGET_ROOTFS_MINIRAMFS),y)
 define LINUX_KCONFIG_FIXUP_CMDS_ROOTFS_CPIO
 	@mkdir -p $(BINARIES_DIR)
-	$(Q)touch $(BINARIES_DIR)/rootfs.cpio
-	$(call KCONFIG_SET_OPT,CONFIG_INITRAMFS_SOURCE,"$${BR_BINARIES_DIR}/rootfs.cpio")
+	$(Q)touch $(BINARIES_DIR)/$(LINUX_INITRAMFS_CPIO)
+	$(call KCONFIG_SET_OPT,CONFIG_INITRAMFS_SOURCE,"$${BR_BINARIES_DIR}/$(LINUX_INITRAMFS_CPIO)")
 	$(call KCONFIG_SET_OPT,CONFIG_INITRAMFS_ROOT_UID,0)
 	$(call KCONFIG_SET_OPT,CONFIG_INITRAMFS_ROOT_GID,0)
 endef
@@ -459,7 +465,7 @@ define LINUX_KCONFIG_FIXUP_CMDS
 		$(call KCONFIG_ENABLE_OPT,CONFIG_ARM64_64K_PAGES))
 	$(if $(BR2_TARGET_ROOTFS_CPIO),
 		$(call KCONFIG_ENABLE_OPT,CONFIG_BLK_DEV_INITRD))
-	$(LINUX_KCONFIG_FIXUP_CMDS_ROOTFS_CPIO)
+	$(LINUX_KCONFIG_FIXUP_CMDS_ROOTFS_CPIO)$(BR2_TARGET_ROOTFS_MINIRAMFS)
 	$(if $(BR2_ROOTFS_DEVICE_CREATION_STATIC),,
 		$(call KCONFIG_ENABLE_OPT,CONFIG_DEVTMPFS)
 		$(call KCONFIG_ENABLE_OPT,CONFIG_DEVTMPFS_MOUNT))
