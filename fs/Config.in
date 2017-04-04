@@ -1,5 +1,7 @@
 menu "Filesystem images"
 
+source "fs/miniramfs/Config.in"
+
 source "fs/axfs/Config.in"
 source "fs/btrfs/Config.in"
 source "fs/cloop/Config.in"
