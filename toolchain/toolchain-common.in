@@ -7,6 +7,11 @@ source "package/gdb/Config.in.host"
 
 comment "Toolchain Generic Options"
 
+# https://sourceware.org/bugzilla/show_bug.cgi?id=19615
+# Affect toolchains built with binutils 2.26 (fixed in binutils 2.26.1).
+config BR2_TOOLCHAIN_HAS_BINUTILS_BUG_19615
+	bool
+
 # https://gcc.gnu.org/bugzilla/show_bug.cgi?id=64735
 # exception_ptr, nested_exception, and future from libstdc++ are not
 # available for architectures not supporting always lock-free atomic
@@ -87,6 +92,12 @@ config BR2_NEEDS_GETTEXT
 config BR2_NEEDS_GETTEXT_IF_LOCALE
 	bool
 	default y if (BR2_NEEDS_GETTEXT && BR2_ENABLE_LOCALE)
+
+# This boolean is true if the toolchain provides a built-in full
+# featured gettext implementation (glibc), and false if only a stub
+# gettext implementation is provided (uclibc, musl)
+config BR2_TOOLCHAIN_HAS_FULL_GETTEXT
+	bool
 
 config BR2_USE_MMU
 	bool "Enable MMU support" if BR2_ARCH_HAS_MMU_OPTIONAL

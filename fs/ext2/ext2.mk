@@ -4,25 +4,20 @@
 #
 ################################################################################
 
-EXT2_OPTS = -G $(BR2_TARGET_ROOTFS_EXT2_GEN) -R $(BR2_TARGET_ROOTFS_EXT2_REV)
-
-EXT2_OPTS += -b $(BR2_TARGET_ROOTFS_EXT2_BLOCKS)
-
-ifneq ($(strip $(BR2_TARGET_ROOTFS_EXT2_INODES)),0)
-EXT2_OPTS += -i $(BR2_TARGET_ROOTFS_EXT2_INODES)
-endif
-EXT2_OPTS += -I $(BR2_TARGET_ROOTFS_EXT2_EXTRA_INODES)
-
-ifneq ($(strip $(BR2_TARGET_ROOTFS_EXT2_RESBLKS)),0)
-EXT2_OPTS += -r $(BR2_TARGET_ROOTFS_EXT2_RESBLKS)
-endif
-
 # qstrip results in stripping consecutive spaces into a single one. So the
 # variable is not qstrip-ed to preserve the integrity of the string value.
 EXT2_LABEL := $(subst ",,$(BR2_TARGET_ROOTFS_EXT2_LABEL))
-ifneq ($(EXT2_LABEL),)
-EXT2_OPTS += -l "$(EXT2_LABEL)"
-endif
+#" Syntax highlighting... :-/ )
+
+EXT2_OPTS = \
+	-G $(BR2_TARGET_ROOTFS_EXT2_GEN) \
+	-R $(BR2_TARGET_ROOTFS_EXT2_REV) \
+	-B 1024 \
+	-b $(BR2_TARGET_ROOTFS_EXT2_BLOCKS) \
+	-i $(BR2_TARGET_ROOTFS_EXT2_INODES) \
+	-I $(BR2_TARGET_ROOTFS_EXT2_EXTRA_INODES) \
+	-r $(BR2_TARGET_ROOTFS_EXT2_RESBLKS) \
+	-l "$(EXT2_LABEL)"
 
 ROOTFS_EXT2_DEPENDENCIES = host-mke2img
 
