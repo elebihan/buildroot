@@ -1,6 +1,6 @@
 config BR2_TARGET_ROOTFS_EXT2
 	bool "ext2/3/4 root filesystem"
-	select BR2_PACKAGE_HOST_MKE2IMG
+	select BR2_PACKAGE_HOST_E2FSPROGS
 	help
 	  Build an ext2/3/4 root filesystem
 
@@ -54,14 +54,6 @@ config BR2_TARGET_ROOTFS_EXT2_BLOCKS
 config BR2_TARGET_ROOTFS_EXT2_INODES
 	int "exact number of inodes (leave at 0 for auto calculation)"
 	default 0
-
-config BR2_TARGET_ROOTFS_EXT2_EXTRA_INODES
-	int "extra inodes" if BR2_TARGET_ROOTFS_EXT2_INODES = 0
-	default 0
-	help
-	  Enter here the number of extra free inodes you want on
-	  your filesystem. By default, Buildroot will not leave
-	  many free inodes.
 
 config BR2_TARGET_ROOTFS_EXT2_RESBLKS
 	int "reserved blocks percentage"

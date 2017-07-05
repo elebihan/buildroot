@@ -35,8 +35,8 @@ endef
 
 HOST_LIBSEPOL_MAKE_ENV = \
 	$(HOST_MAKE_ENV) \
-	DESTDIR=$(HOST_DIR)/usr \
-	PREFIX=$(HOST_DIR)/usr
+	DESTDIR=$(HOST_DIR) \
+	PREFIX=$(HOST_DIR)
 
 define HOST_LIBSEPOL_BUILD_CMDS
 	$(HOST_LIBSEPOL_MAKE_ENV) $(MAKE) -C $(@D) $(HOST_CONFIGURE_OPTS)
@@ -44,7 +44,7 @@ endef
 
 define HOST_LIBSEPOL_INSTALL_CMDS
 	$(HOST_LIBSEPOL_MAKE_ENV) $(MAKE) -C $(@D) install $(HOST_CONFIGURE_OPTS)
-	ln -sf libsepol.so.1 $(HOST_DIR)/usr/lib/libsepol.so
+	ln -sf libsepol.so.1 $(HOST_DIR)/lib/libsepol.so
 endef
 
 $(eval $(generic-package))

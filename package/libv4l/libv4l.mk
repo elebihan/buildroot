@@ -61,17 +61,15 @@ endif
 
 ifeq ($(BR2_PACKAGE_LIBV4L_UTILS),y)
 LIBV4L_CONF_OPTS += --enable-v4l-utils
-ifeq ($(BR2_NEEDS_GETTEXT_IF_LOCALE),y)
-LIBV4L_DEPENDENCIES += gettext
-endif
+LIBV4L_DEPENDENCIES += $(TARGET_NLS_DEPENDENCIES)
 ifeq ($(BR2_PACKAGE_QT5BASE)$(BR2_PACKAGE_QT5BASE_GUI)$(BR2_PACKAGE_QT5BASE_WIDGETS),yyy)
 LIBV4L_CONF_OPTS += --enable-qv4l2
 LIBV4L_DEPENDENCIES += qt5base
 # protect against host version detection of moc-qt5/rcc-qt5/uic-qt5
 LIBV4L_CONF_ENV += \
-	ac_cv_prog_MOC=$(HOST_DIR)/usr/bin/moc \
-	ac_cv_prog_RCC=$(HOST_DIR)/usr/bin/rcc \
-	ac_cv_prog_UIC=$(HOST_DIR)/usr/bin/uic
+	ac_cv_prog_MOC=$(HOST_DIR)/bin/moc \
+	ac_cv_prog_RCC=$(HOST_DIR)/bin/rcc \
+	ac_cv_prog_UIC=$(HOST_DIR)/bin/uic
 # qt5 needs c++11 (since qt-5.7)
 ifeq ($(BR2_PACKAGE_QT5_VERSION_LATEST),y)
 LIBV4L_CONF_ENV += CXXFLAGS="$(TARGET_CXXFLAGS) -std=c++11"

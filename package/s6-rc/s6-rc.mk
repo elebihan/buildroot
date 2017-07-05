@@ -47,11 +47,11 @@ endef
 HOST_S6_RC_DEPENDENCIES = host-s6
 
 HOST_S6_RC_CONF_OPTS = \
-	--prefix=$(HOST_DIR)/usr \
+	--prefix=$(HOST_DIR) \
 	--libexecdir=/usr/libexec \
-	--with-sysdeps=$(HOST_DIR)/usr/lib/skalibs/sysdeps \
-	--with-include=$(HOST_DIR)/usr/include \
-	--with-dynlib=$(HOST_DIR)/usr/lib \
+	--with-sysdeps=$(HOST_DIR)/lib/skalibs/sysdeps \
+	--with-include=$(HOST_DIR)/include \
+	--with-dynlib=$(HOST_DIR)/lib \
 	--disable-static \
 	--enable-shared \
 	--disable-allstatic
@@ -66,7 +66,7 @@ endef
 
 define HOST_S6_RC_INSTALL_CMDS
 	$(HOST_MAKE_ENV) $(MAKE) -C $(@D) install-dynlib install-bin
-	rm -f $(HOST_DIR)/usr/bin/s6-rc-dryrun
+	rm -f $(HOST_DIR)/bin/s6-rc-dryrun
 endef
 
 $(eval $(generic-package))

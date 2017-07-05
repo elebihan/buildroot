@@ -22,8 +22,8 @@
 
 # Set compiler variables.
 ifeq ($(BR2_CCACHE),y)
-CMAKE_HOST_C_COMPILER = $(HOST_DIR)/usr/bin/ccache
-CMAKE_HOST_CXX_COMPILER = $(HOST_DIR)/usr/bin/ccache
+CMAKE_HOST_C_COMPILER = $(HOST_DIR)/bin/ccache
+CMAKE_HOST_CXX_COMPILER = $(HOST_DIR)/bin/ccache
 CMAKE_HOST_C_COMPILER_ARG1 = $(HOSTCC_NOCCACHE)
 CMAKE_HOST_CXX_COMPILER_ARG1 = $(HOSTCXX_NOCCACHE)
 else
@@ -86,7 +86,7 @@ define $(2)_CONFIGURE_CMDS
 	rm -f CMakeCache.txt && \
 	PATH=$$(BR_PATH) \
 	$$($$(PKG)_CONF_ENV) $$(BR2_CMAKE) $$($$(PKG)_SRCDIR) \
-		-DCMAKE_TOOLCHAIN_FILE="$$(HOST_DIR)/usr/share/buildroot/toolchainfile.cmake" \
+		-DCMAKE_TOOLCHAIN_FILE="$$(HOST_DIR)/share/buildroot/toolchainfile.cmake" \
 		-DCMAKE_INSTALL_PREFIX="/usr" \
 		-DCMAKE_COLOR_MAKEFILE=OFF \
 		-DBUILD_DOC=OFF \
@@ -115,7 +115,7 @@ define $(2)_CONFIGURE_CMDS
 		-DCMAKE_FIND_ROOT_PATH_MODE_PROGRAM="BOTH" \
 		-DCMAKE_FIND_ROOT_PATH_MODE_LIBRARY="BOTH" \
 		-DCMAKE_FIND_ROOT_PATH_MODE_INCLUDE="BOTH" \
-		-DCMAKE_INSTALL_PREFIX="$$(HOST_DIR)/usr" \
+		-DCMAKE_INSTALL_PREFIX="$$(HOST_DIR)" \
 		-DCMAKE_C_FLAGS="$$(HOST_CFLAGS)" \
 		-DCMAKE_CXX_FLAGS="$$(HOST_CXXFLAGS)" \
 		-DCMAKE_EXE_LINKER_FLAGS="$$(HOST_LDFLAGS)" \
@@ -234,10 +234,10 @@ CMAKE_SYSTEM_PROCESSOR = $(BR2_ARCH)
 endif
 
 # In order to allow the toolchain to be relocated, we calculate the HOST_DIR
-# based on the toolchainfile.cmake file's location: $(HOST_DIR)/usr/share/buildroot
+# based on the toolchainfile.cmake file's location: $(HOST_DIR)/share/buildroot
 # In all the other variables, HOST_DIR will be replaced by RELOCATED_HOST_DIR,
 # so we have to strip "$(HOST_DIR)/" from the paths that contain it.
-$(HOST_DIR)/usr/share/buildroot/toolchainfile.cmake:
+$(HOST_DIR)/share/buildroot/toolchainfile.cmake:
 	@mkdir -p $(@D)
 	sed \
 		-e 's#@@STAGING_SUBDIR@@#$(call qstrip,$(STAGING_SUBDIR))#' \
@@ -254,5 +254,5 @@ $(HOST_DIR)/usr/share/buildroot/toolchainfile.cmake:
 		$(TOPDIR)/support/misc/toolchainfile.cmake.in \
 		> $@
 
-$(HOST_DIR)/usr/share/buildroot/Platform/Buildroot.cmake:
+$(HOST_DIR)/share/buildroot/Platform/Buildroot.cmake:
 	$(Q)$(INSTALL) -D -m 0644 support/misc/Buildroot.cmake $(@)

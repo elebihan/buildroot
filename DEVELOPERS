@@ -45,6 +45,9 @@ F:	package/sepolgen/
 F:	package/setools/
 F:	package/sngrep/
 
+N:	Adrian Perez de Castro <aperez@igalia.com>
+F:	package/webkitgtk/
+
 N:	Alex Suykov <alex.suykov@gmail.com>
 F:	package/vboot-utils/
 
@@ -344,8 +347,10 @@ F:	package/libsvg/
 F:	package/libsvg-cairo/
 
 N:	Chakra Divi <chakra@openedev.com>
+F:	board/friendlyarm/nanopi-m1
 F:	board/olimex/a13_olinuxino
 F:	board/orangepi/orangepi-plus
+F:	configs/nanopi_m1_defconfig
 F:	configs/olimex_a13_olinuxino_defconfig
 F:	configs/orangepi_plus_defconfig
 
@@ -1783,7 +1788,6 @@ F:	package/libiscsi/
 F:	package/libseccomp/
 F:	package/linux-tools/
 F:	package/mesa3d-headers/
-F:	package/mke2img/
 F:	package/nbd/
 F:	package/nut/
 F:	package/nvidia-driver/
