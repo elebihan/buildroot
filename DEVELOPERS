@@ -34,6 +34,7 @@ F:	package/audit/
 F:	package/checkpolicy/
 F:	package/gstreamer1/gst1-vaapi/
 F:	package/janus-gateway/
+F:	package/libressl/
 F:	package/libselinux/
 F:	package/libsemanage/
 F:	package/libsepol/
@@ -1237,6 +1238,9 @@ F:	package/monkey/
 N:	Murat Demirten <mdemirten@yh.com.tr>
 F:	package/jpeg-turbo/
 F:	package/libgeotiff/
+
+N:	Naoki Matsumoto <n-matsumoto@melcoinc.co.jp>
+F:	package/pcre2/
 
 N:	Nathan Lynch <ntl@pobox.com>
 F:	package/chrony/

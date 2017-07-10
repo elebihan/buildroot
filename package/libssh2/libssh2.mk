@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-LIBSSH2_VERSION = 1.7.0
+LIBSSH2_VERSION = 1.8.0
 LIBSSH2_SITE = http://www.libssh2.org/download
 LIBSSH2_LICENSE = BSD
 LIBSSH2_LICENSE_FILES = COPYING
@@ -15,8 +15,7 @@ LIBSSH2_CONF_OPTS = --disable-examples-build
 # Favour libgcrypt.
 ifeq ($(BR2_PACKAGE_LIBGCRYPT),y)
 LIBSSH2_DEPENDENCIES += libgcrypt
-LIBSSH2_CONF_OPTS += --with-libgcrypt \
-	--with-libgcrypt-prefix=$(STAGING_DIR)/usr \
+LIBSSH2_CONF_OPTS += --with-libgcrypt=$(STAGING_DIR)/usr \
 	--without-openssl
 # configure.ac forgets to link to dependent libraries of gcrypt breaking static
 # linking
