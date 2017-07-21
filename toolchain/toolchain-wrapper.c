@@ -51,6 +51,9 @@ static char *predef_args[] = {
 #ifdef BR_ABI
 	"-mabi=" BR_ABI,
 #endif
+#ifdef BR_NAN
+	"-mnan=" BR_NAN,
+#endif
 #ifdef BR_FPU
 	"-mfpu=" BR_FPU,
 #endif
@@ -249,6 +252,20 @@ int main(int argc, char **argv)
 
 	if (i == argc)
 		*cur++ = "-mfloat-abi=" BR_FLOAT_ABI;
+#endif
+
+#ifdef BR_FP32_MODE
+	/* add fp32 mode if soft-float is not args or hard-float overrides soft-float */
+	int add_fp32_mode = 1;
+	for (i = 1; i < argc; i++) {
+		if (!strcmp(argv[i], "-msoft-float"))
+			add_fp32_mode = 0;
+		else if (!strcmp(argv[i], "-mhard-float"))
+			add_fp32_mode = 1;
+	}
+
+	if (add_fp32_mode == 1)
+		*cur++ = "-mfp" BR_FP32_MODE;
 #endif
 
 #if defined(BR_ARCH) || \

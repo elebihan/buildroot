@@ -98,6 +98,7 @@ F:	package/python-pathlib2/
 F:	package/python-pickleshare/
 F:	package/python-scandir/
 F:	package/python-simplegeneric/
+F:	package/python-systemd/
 F:	package/python-traitlets/
 
 N:	Andrey Yurovsky <yurovsky@gmail.com>
@@ -182,10 +183,6 @@ F:	package/taskd/
 
 N:	Benjamin Kamath <kamath.ben@gmail.com>
 F:	package/lapack/
-
-N:	Benoît Allard <benoit.allard@greenbone.net>
-F:	boot/syslinux/
-F:	package/dc3dd/
 
 N:	Bernd Kuhls <bernd.kuhls@t-online.de>
 F:	package/alsa-lib/
@@ -1469,14 +1466,6 @@ F:	package/biosdevname/
 N:	Rémi Rérolle <remi.rerolle@gmail.com>
 F:	package/libfreeimage/
 
-N:	Sagaert Johan <sagaert.johan@skynet.be>
-F:	package/git/
-F:	package/gsl/
-F:	package/jquery-mobile/
-F:	package/libgsasl/
-F:	package/qdecoder/
-F:	package/qlibc/
-
 N:	Sam Bobroff <sam.bobroff@au1.ibm.com>
 F:	arch/Config.in.powerpc
 F:	package/librtas/
@@ -1777,6 +1766,7 @@ N:	Wojciech Niziński <niziak@spox.org>
 F:	package/fwup/
 
 N:	Yann E. MORIN <yann.morin.1998@free.fr>
+F:	fs/squashfs/
 F:	package/cegui06/
 F:	package/celt051/
 F:	package/dtc/
