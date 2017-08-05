@@ -100,6 +100,7 @@ F:	package/python-scandir/
 F:	package/python-simplegeneric/
 F:	package/python-systemd/
 F:	package/python-traitlets/
+F:	package/zstd/
 
 N:	Andrey Yurovsky <yurovsky@gmail.com>
 F:	package/rauc/
@@ -346,9 +347,11 @@ F:	package/libsvg-cairo/
 
 N:	Chakra Divi <chakra@openedev.com>
 F:	board/friendlyarm/nanopi-m1
+F:	board/friendlyarm/nanopi-m1-plus
 F:	board/olimex/a13_olinuxino
 F:	board/orangepi/orangepi-plus
 F:	configs/nanopi_m1_defconfig
+F:	configs/nanopi_m1_plus_defconfig
 F:	configs/olimex_a13_olinuxino_defconfig
 F:	configs/orangepi_plus_defconfig
 
@@ -1146,6 +1149,7 @@ F:	package/libsepol/
 F:	package/libqmi/
 F:	package/nginx-upload/
 F:	package/omniorb/
+F:	package/paxtest/
 F:	package/policycoreutils/
 F:	package/python-ipy/
 F:	package/python-posix-ipc/
@@ -1225,6 +1229,10 @@ F:	package/python-pyzmq/
 
 N:	Michael Trimarchi <michael@amarulasolutions.com>
 F:	package/python-spidev/
+
+N:	Michał Łyszczek <michal.lyszczek@bofc.pl>
+F:	board/altera/socrates_cyclone5/
+F:	configs/socrates_cyclone5_defconfig
 
 N:	Mikhail Boiko <mikhailboiko85@gmail.com>
 F:	package/libfribidi/
@@ -1388,6 +1396,7 @@ F:	package/glog/
 F:	package/gssdp/
 F:	package/gupnp/
 F:	package/gupnp-av/
+F:	package/let-me-create/
 F:	package/nanomsg/
 
 N:	Rahul Jain <rahul.jain@imgtec.com>
@@ -1397,13 +1406,14 @@ F:	package/ustream-ssl/
 N:	Renaud Aubin <root@renaud.io>
 F:	package/libhttpparser/
 
-N:	Ricardo Martincoski <ricardo.martincoski@datacom.ind.br>
-F:	package/atop/
-
 N:	Rhys Williams <github@wilberforce.co.nz>
 F:	package/lirc-tools/
 
+N:	Ricardo Martincoski <ricardo.martincoski@datacom.ind.br>
+F:	package/atop/
+
 N:	Ricardo Martincoski <ricardo.martincoski@gmail.com>
+F:	support/testing/
 F:	utils/check-package
 F:	utils/checkpackagelib/
 
@@ -1596,7 +1606,6 @@ F:	package/tovid/
 F:	package/xorriso/
 
 N:	Steve Thomas <scjthm@live.com>
-F:	package/cloog/
 F:	package/isl/
 
 N:	Steven Noonan <steven@uplinklabs.net>

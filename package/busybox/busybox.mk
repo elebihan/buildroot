@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-BUSYBOX_VERSION = 1.26.2
+BUSYBOX_VERSION = 1.27.1
 BUSYBOX_SITE = http://www.busybox.net/downloads
 BUSYBOX_SOURCE = busybox-$(BUSYBOX_VERSION).tar.bz2
 BUSYBOX_LICENSE = GPL-2.0
@@ -181,10 +181,22 @@ define BUSYBOX_INSTALL_UDHCPC_SCRIPT
 endef
 
 ifeq ($(BR2_INIT_BUSYBOX),y)
+
 define BUSYBOX_SET_INIT
 	$(call KCONFIG_ENABLE_OPT,CONFIG_INIT,$(BUSYBOX_BUILD_CONFIG))
 endef
-endif
+
+ifeq ($(BR2_TARGET_GENERIC_GETTY),y)
+define BUSYBOX_SET_GETTY
+	$(SED) '/# GENERIC_SERIAL$$/s~^.*#~$(SYSTEM_GETTY_PORT)::respawn:/sbin/getty -L $(SYSTEM_GETTY_OPTIONS) $(SYSTEM_GETTY_PORT) $(SYSTEM_GETTY_BAUDRATE) $(SYSTEM_GETTY_TERM) #~' \
+		$(TARGET_DIR)/etc/inittab
+endef
+BUSYBOX_TARGET_FINALIZE_HOOKS += BUSYBOX_SET_GETTY
+endif # BR2_TARGET_GENERIC_GETTY
+
+BUSYBOX_TARGET_FINALIZE_HOOKS += SYSTEM_REMOUNT_ROOT_INITTAB
+
+endif # BR2_INIT_BUSYBOX
 
 ifeq ($(BR2_PACKAGE_BUSYBOX_SELINUX),y)
 BUSYBOX_DEPENDENCIES += host-pkgconf libselinux libsepol
