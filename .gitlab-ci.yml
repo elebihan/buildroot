@@ -49,7 +49,9 @@ check-DEVELOPERS:
 .runtime_test: &runtime_test
     # Keep build directories so the rootfs can be an artifact of the job. The
     # runner will clean up those files for us.
-    script: ./support/testing/run-tests -o test-output/ -d test-dl/ -k ${CI_BUILD_NAME}
+    # Multiply every emulator timeout by 10 to avoid sporadic failures in
+    # elastic runners.
+    script: ./support/testing/run-tests -o test-output/ -d test-dl/ -k --timeout-multiplier 10 ${CI_BUILD_NAME}
     artifacts:
         when: always
         expire_in: 2 weeks
@@ -66,7 +68,6 @@ arm_juno_defconfig: *defconfig
 armadeus_apf27_defconfig: *defconfig
 armadeus_apf28_defconfig: *defconfig
 armadeus_apf51_defconfig: *defconfig
-armadeus_apf9328_defconfig: *defconfig
 at91sam9260eknf_defconfig: *defconfig
 at91sam9g20dfc_defconfig: *defconfig
 at91sam9g45m10ek_defconfig: *defconfig
@@ -86,6 +87,7 @@ atmel_sama5d4_xplained_defconfig: *defconfig
 atmel_sama5d4_xplained_dev_defconfig: *defconfig
 atmel_sama5d4_xplained_mmc_defconfig: *defconfig
 atmel_sama5d4_xplained_mmc_dev_defconfig: *defconfig
+bananapi_m2_plus_defconfig: *defconfig
 bananapro_defconfig: *defconfig
 beagleboardx15_defconfig: *defconfig
 beaglebone_defconfig: *defconfig
@@ -118,8 +120,10 @@ gdb_bfin_bf512_defconfig: *defconfig
 grinn_chiliboard_defconfig: *defconfig
 grinn_liteboard_defconfig: *defconfig
 imx23evk_defconfig: *defconfig
-imx6q-sabresd_defconfig: *defconfig
+imx6-sabresd_defconfig: *defconfig
+imx6-sabresd_qt5_defconfig: *defconfig
 imx6ulpico_defconfig: *defconfig
+imx7dpico_defconfig: *defconfig
 lego_ev3_defconfig: *defconfig
 linksprite_pcduino_defconfig: *defconfig
 minnowboard_max-graphical_defconfig: *defconfig
@@ -171,6 +175,7 @@ qemu_mips64r6el_malta_defconfig: *defconfig
 qemu_nios2_10m50_defconfig: *defconfig
 qemu_or1k_defconfig: *defconfig
 qemu_ppc64_pseries_defconfig: *defconfig
+qemu_ppc64le_pseries_defconfig: *defconfig
 qemu_ppc_g3beige_defconfig: *defconfig
 qemu_ppc_mpc8544ds_defconfig: *defconfig
 qemu_ppc_virtex_ml507_defconfig: *defconfig
@@ -186,6 +191,7 @@ raspberrypi0_defconfig: *defconfig
 raspberrypi2_defconfig: *defconfig
 raspberrypi3_64_defconfig: *defconfig
 raspberrypi3_defconfig: *defconfig
+raspberrypi3_qt5we_defconfig: *defconfig
 raspberrypi_defconfig: *defconfig
 riotboard_defconfig: *defconfig
 roseapplepi_defconfig: *defconfig
@@ -204,6 +210,7 @@ toradex_apalis_imx6_defconfig: *defconfig
 ts4800_defconfig: *defconfig
 ts4900_defconfig: *defconfig
 ts5x00_defconfig: *defconfig
+ts7680_defconfig: *defconfig
 wandboard_defconfig: *defconfig
 warp7_defconfig: *defconfig
 warpboard_defconfig: *defconfig
@@ -222,8 +229,6 @@ tests.fs.test_ext.TestExt3: *runtime_test
 tests.fs.test_ext.TestExt4: *runtime_test
 tests.fs.test_iso9660.TestIso9660Grub2External: *runtime_test
 tests.fs.test_iso9660.TestIso9660Grub2Internal: *runtime_test
-tests.fs.test_iso9660.TestIso9660GrubExternal: *runtime_test
-tests.fs.test_iso9660.TestIso9660GrubInternal: *runtime_test
 tests.fs.test_iso9660.TestIso9660SyslinuxExternal: *runtime_test
 tests.fs.test_iso9660.TestIso9660SyslinuxInternal: *runtime_test
 tests.fs.test_jffs2.TestJffs2: *runtime_test
