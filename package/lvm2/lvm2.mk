@@ -35,6 +35,13 @@ else
 LVM2_CONF_OPTS += --disable-readline
 endif
 
+ifeq ($(BR2_PACKAGE_LIBSELINUX),y)
+LVM2_CONF_OPTS += --enable-selinux
+LVM2_DEPENDENCIES += libselinux
+else
+LVM2_CONF_OPTS += --disable-selinux
+endif
+
 ifeq ($(BR2_PACKAGE_LVM2_STANDARD_INSTALL),)
 LVM2_MAKE_OPTS = device-mapper
 LVM2_INSTALL_STAGING_OPTS = DESTDIR=$(STAGING_DIR) install_device-mapper
@@ -59,7 +66,8 @@ HOST_LVM2_CONF_OPTS = \
 	--disable-dmeventd \
 	--disable-applib \
 	--disable-fsadm \
-	--disable-readline
+	--disable-readline \
+	--disable-selinux
 HOST_LVM2_MAKE_OPTS = device-mapper
 HOST_LVM2_INSTALL_OPTS = install_device-mapper
 
