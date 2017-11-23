@@ -31,8 +31,16 @@ F:	package/gstreamer1/gst1-rtsp-server/
 
 N:	Adam Duskett <aduskett@gmail.com>
 F:	package/audit/
+F:	package/busybox/
 F:	package/checkpolicy/
+F:	package/cppdb/
+F:	package/gstreamer1/gstreamer1/
+F:	package/gstreamer1/gst1-plugins-bad/
+F:	package/gstreamer1/gst1-plugins-base/
+F:	package/gstreamer1/gst1-plugins-good/
+F:	package/gstreamer1/gst1-plugins-ugly/
 F:	package/gstreamer1/gst1-vaapi/
+F:	package/imx-usb-loader/
 F:	package/janus-gateway/
 F:	package/libressl/
 F:	package/libselinux/
@@ -49,6 +57,7 @@ F:	package/setools/
 F:	package/sngrep/
 
 N:	Adrian Perez de Castro <aperez@igalia.com>
+F:	package/libepoxy/
 F:	package/webkitgtk/
 
 N:	Aleksander Morgado <aleksander@aleksander.es>
@@ -182,8 +191,15 @@ F:	package/sigrok-cli/
 
 N:	Baruch Siach <baruch@tkos.co.il>
 F:	package/daemon/
+F:	package/dropbear/
 F:	package/ebtables/
+F:	package/i2c-tools/
+F:	package/libcurl/
+F:	package/libpcap/
 F:	package/openipmi/
+F:	package/socat/
+F:	package/strace/
+F:	package/tcpdump/
 F:	package/ti-uim/
 F:	package/uhubctl/
 
@@ -201,6 +217,7 @@ F:	package/apr/
 F:	package/apr-util/
 F:	package/bcg729/
 F:	package/bluez-tools/
+F:	package/boinc/
 F:	package/clamav/
 F:	package/dovecot/
 F:	package/dovecot-pigeonhole/
@@ -584,6 +601,7 @@ F:	package/alljoyn/
 F:	package/alljoyn-base/
 F:	package/alljoyn-tcl/
 F:	package/alljoyn-tcl-base/
+F:	package/boinc/
 F:	package/gtksourceview/
 F:	package/gssdp/
 F:	package/gupnp/
@@ -591,6 +609,7 @@ F:	package/gupnp-dlna/
 F:	package/gupnp-tools/
 F:	package/hiredis/
 F:	package/igd2-for-linux/
+F:	package/libupnp/
 F:	package/minissdpd/
 F:	package/motion/
 F:	package/tinycbor/
@@ -776,6 +795,9 @@ F:	package/pdbg/
 F:	board/qemu/ppc64le-pseries/
 F:	configs/qemu_ppc64le_pseries_defconfig
 
+N:	Joseph Kogut <joseph.kogut@gmail.com>
+F:	package/python-websockets/
+
 N:	Johan Derycke <johanderycke@gmail.com>
 F:	package/python-libconfig/
 
@@ -944,7 +966,7 @@ F:	support/legal-info/
 N:	Lucas De Marchi <lucas.de.marchi@gmail.com>
 F:	package/fswebcam/
 
-N:	Ludovic Desroches <ludovic.desroches@atmel.com>
+N:	Ludovic Desroches <ludovic.desroches@microchip.com>
 F:	board/atmel/
 F:	configs/at91*
 F:	configs/atmel_*
@@ -1016,32 +1038,73 @@ F:	configs/ts4900_defconfig
 F:	package/ts4900-fpga/
 
 N:	Matt Weber <matthew.weber@rockwellcollins.com>
+F:	package/argp-standalone/
+F:	package/aufs/
+F:	package/aufs-util/
 F:	package/bc/
+F:	package/bridge-utils/
 F:	package/checkpolicy/
 F:	package/cgroupfs-mount/
+F:	package/crda/
+F:	package/devmem2/
+F:	package/dnsmasq/
+F:	package/dosfstools/
+F:	package/eeprog/
 F:	package/eigen/
+F:	package/ethtool/
+F:	package/flashbench/
 F:	package/fmc/
 F:	package/fmlib/
+F:	package/git/
+F:	package/gnutls/
+F:	package/hostapd/
+F:	package/i2c-tools/
+F:	package/ifplugd/
 F:	package/igmpproxy/
+F:	package/iperf/
+F:	package/iperf3/
 F:	package/iputils/
+F:	package/iw/
 F:	package/libcsv/
+F:	package/libcurl/
+F:	package/libfcgi/
+F:	package/libopenssl/
 F:	package/libselinux/
 F:	package/libsemanage/
 F:	package/libsepol/
+F:	package/libssh2/
 F:	package/libqmi/
+F:	package/lighttpd/
+F:	package/logrotate/
+F:	package/makedevs/
+F:	package/memtester/
+F:	package/mii-diag/
+F:	package/mrouted/
+F:	package/mtd/
+F:	package/mtools/
 F:	package/nginx-upload/
 F:	package/omniorb/
 F:	package/paxtest/
+F:	package/picocom/
 F:	package/policycoreutils/
+F:	package/proftpd/
+F:	package/protobuf-c/
+F:	package/protobuf/
 F:	package/python-ipy/
 F:	package/python-posix-ipc/
 F:	package/python-pypcap/
 F:	package/python-pyrex/
 F:	package/raptor/
+F:	package/rng-tools/
+F:	package/rsyslog/
 F:	package/setools/
 F:	package/smcroute/
 F:	package/tclap/
+F:	package/uboot-tools/
+F:	package/unionfs/
 F:	package/valijson/
+F:	package/wpa_supplicant/
+F:	package/wireless_tools/
 
 N:	Mauro Condarelli <mc5686@mclink.it>
 F:	package/mc/
@@ -1161,6 +1224,7 @@ N:	Olivier Matz <olivier.matz@6wind.com>
 F:	package/python-pyelftools/
 
 N:	Olivier Schonken <olivier.schonken@gmail.com>
+F:	package/cups/
 F:	package/ijs/
 F:	package/poppler/
 F:	package/qpdf/
@@ -1235,8 +1299,19 @@ N:	Petr Kulhavy <brain@jikos.cz>
 F:	package/linuxptp/
 
 N:	Petr Vorel <petr.vorel@gmail.com>
+F:	package/connman/
+F:	package/feh/
+F:	package/imlib2/
+F:	package/iproute2/
+F:	package/iputils/
+F:	package/libmbim/
+F:	package/libqmi/
 F:	package/linux-backports/
 F:	package/ltp-testsuite/
+F:	package/modem-manager/
+F:	package/network-manager/
+F:	package/ofono/
+F:	package/python-networkmanager/
 
 N:	Phil Eichinger <phil.eichinger@gmail.com>
 F:	package/libqrencode/
@@ -1627,7 +1702,6 @@ N:	Vinicius Tinti <viniciustinti@gmail.com>
 F:	package/python-thrift/
 
 N:	Volkov Viacheslav <sv99@inbox.ru>
-F:	package/rfkill/
 F:	package/v4l2grab/
 F:	package/zbar/
 
