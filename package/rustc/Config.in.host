@@ -5,7 +5,8 @@ config BR2_PACKAGE_HOST_RUSTC_ARCH_SUPPORTS
 	default y if BR2_i386
 	default y if BR2_x86_64
 	default y if BR2_aarch64
-	default y if BR2_ARM_CPU_ARMV6 || BR2_ARM_CPU_ARMV7A
+	default y if BR2_ARM_CPU_ARMV6 || BR2_ARM_CPU_ARMV7A \
+		|| BR2_ARM_CPU_ARMV8A
 	default y if BR2_powerpc || BR2_powerpc64
 	default y if (BR2_mips || BR2_mipsel) && !BR2_MIPS_CPU_MIPS32R6
 	default y if (BR2_mips64 || BR2_mips64el) && !BR2_MIPS_CPU_MIPS64R6 \
@@ -15,8 +16,9 @@ config BR2_PACKAGE_HOST_RUSTC_ARCH_SUPPORTS
 
 config BR2_PACKAGE_HOST_RUSTC_ARCH
 	string
-	default "armv7"  if (BR2_ARM_CPU_ARMV7A && BR2_ARM_EABIHF)
-	default BR2_ARCH if !BR2_ARM_CPU_ARMV7A
+	default "armv7"  if ((BR2_ARM_CPU_ARMV7A || BR2_ARM_CPU_ARMV8A) \
+		&& BR2_ARM_EABIHF)
+	default BR2_ARCH if !(BR2_ARM_CPU_ARMV7A || BR2_ARM_CPU_ARMV8A)
 
 config BR2_PACKAGE_HOST_RUSTC_ABI
 	string
