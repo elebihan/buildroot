@@ -54,11 +54,14 @@ define HOST_RUST_CONFIGURE_CMDS
 		echo 'python = "$(HOST_DIR)/bin/python2"'; \
 		echo 'submodules = false'; \
 		echo 'vendor = true'; \
+		echo 'extended = true'; \
+		echo 'tools = ["cargo"]'; \
 		echo 'compiler-docs = false'; \
 		echo 'docs = false'; \
 		echo 'verbose = $(HOST_RUST_VERBOSITY)'; \
 		echo '[install]'; \
 		echo 'prefix = "$(HOST_DIR)"'; \
+		echo 'sysconfdir = "$(HOST_DIR)/etc"'; \
 		echo '[rust]'; \
 		echo 'use-jemalloc = $(HOST_RUST_JEMALLOC_ENABLED)'; \
 		echo 'channel = "stable"'; \
