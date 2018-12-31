@@ -14,6 +14,13 @@ choice
 	help
 	  Select a Cargo package manager provider
 
+config BR2_PACKAGE_HOST_RUST_CARGO
+	bool "host rust"
+	depends on BR2_PACKAGE_HOST_RUST
+	select BR2_PACKAGE_HAS_HOST_CARGO
+	help
+	  Install Cargo built at the same time as the Rust compiler.
+
 config BR2_PACKAGE_HOST_CARGO_BIN
 	bool "host cargo (pre-built)"
 	depends on BR2_PACKAGE_HOST_RUST_BIN
@@ -32,4 +39,5 @@ config BR2_PACKAGE_PROVIDES_HOST_CARGO
 	string
 	depends on BR2_PACKAGE_HAS_HOST_CARGO
 	default "host-cargo-bin" if !BR2_PACKAGE_HOST_RUST
+	default "host-rust" if BR2_PACKAGE_HOST_RUST
 	depends on BR2_PACKAGE_HOST_RUSTC_ARCH_SUPPORTS
