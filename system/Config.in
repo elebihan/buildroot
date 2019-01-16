@@ -12,6 +12,7 @@ config BR2_ROOTFS_SKELETON_DEFAULT
 	select BR2_PACKAGE_SKELETON_INIT_SYSV if BR2_INIT_SYSV
 	select BR2_PACKAGE_SKELETON_INIT_SYSV if BR2_INIT_BUSYBOX
 	select BR2_PACKAGE_SKELETON_INIT_SYSTEMD if BR2_INIT_SYSTEMD
+	select BR2_PACKAGE_SKELETON_INIT_COMMON if BR2_INIT_S6
 	select BR2_PACKAGE_SKELETON_INIT_NONE if BR2_INIT_NONE
 	help
 	  Use default target skeleton
@@ -123,6 +124,10 @@ comment "systemd needs a glibc toolchain w/ SSP, headers >= 3.10"
 	depends on !BR2_TOOLCHAIN_USES_GLIBC || \
 		!BR2_TOOLCHAIN_HAS_SSP || \
 		!BR2_TOOLCHAIN_HEADERS_AT_LEAST_3_10
+
+config BR2_INIT_S6
+	bool "s6"
+	select BR2_PACKAGE_S6_LINUX_INIT
 
 config BR2_INIT_NONE
 	bool "None"
@@ -342,7 +347,7 @@ config BR2_TARGET_GENERIC_GETTY_TERM
 	string "TERM environment variable"
 	default "vt100"
 	# currently observed only by busybox and sysvinit
-	depends on BR2_INIT_BUSYBOX || BR2_INIT_SYSV
+	depends on BR2_INIT_BUSYBOX || BR2_INIT_SYSV || BR2_INIT_S6
 	help
 	  Specify a TERM type.
 
@@ -350,7 +355,7 @@ config BR2_TARGET_GENERIC_GETTY_OPTIONS
 	string "other options to pass to getty"
 	default ""
 	# currently observed only by busybox and sysvinit
-	depends on BR2_INIT_BUSYBOX || BR2_INIT_SYSV
+	depends on BR2_INIT_BUSYBOX || BR2_INIT_SYSV || BR2_INIT_S6
 	help
 	  Any other flags you want to pass to getty,
 	  Refer to getty --help for details.
