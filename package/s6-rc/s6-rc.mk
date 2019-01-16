@@ -11,6 +11,13 @@ S6_RC_LICENSE_FILES = COPYING
 S6_RC_INSTALL_STAGING = YES
 S6_RC_DEPENDENCIES = s6
 
+ifeq ($(BR2_INIT_S6),y)
+# Needs s6-rc-compile to create initial rc db, also
+# build after s6-linux-init to rewrite rc.init for run
+# s6-rc services.
+S6_RC_DEPENDENCIES += host-s6-rc s6-linux-init
+endif
+
 S6_RC_CONF_OPTS = \
 	--prefix=/usr \
 	--with-sysdeps=$(STAGING_DIR)/usr/lib/skalibs/sysdeps \
@@ -43,6 +50,31 @@ endef
 define S6_RC_INSTALL_STAGING_CMDS
 	$(TARGET_MAKE_ENV) $(MAKE) -C $(@D) DESTDIR=$(STAGING_DIR) install
 endef
+
+ifeq ($(BR2_INIT_S6),y)
+
+define S6_RC_PREPARE_INIT_RC
+	mkdir -p $(TARGET_DIR)/etc/s6-rc/service/default
+	echo bundle > $(TARGET_DIR)/etc/s6-rc/service/default/type
+	touch $(TARGET_DIR)/etc/s6-rc/service/default/contents
+
+	mkdir -p $(TARGET_DIR)/etc/s6-rc/compiled-initial
+	ln -sf compiled-initial $(TARGET_DIR)/etc/s6-rc/compiled
+
+	$(INSTALL) -m 0755 $(S6_RC_PKGDIR)/rc.init $(TARGET_DIR)/etc/rc.init
+	$(INSTALL) -m 0755 $(S6_RC_PKGDIR)/rc.shutdown $(TARGET_DIR)/etc/rc.shutdown
+endef
+S6_RC_POST_INSTALL_TARGET_HOOKS += S6_RC_PREPARE_INIT_RC
+
+define S6_RC_FINALIZE_INIT_RC
+	rm -rf $(TARGET_DIR)/etc/s6-rc/compiled-initial
+	$(HOST_DIR)/bin/s6-rc-compile -v 1 \
+		$(TARGET_DIR)/etc/s6-rc/compiled-initial \
+		$(TARGET_DIR)/etc/s6-rc/service
+endef
+S6_RC_ROOTFS_PRE_CMD_HOOKS += S6_RC_FINALIZE_INIT_RC
+
+endif # BR2_INIT_S6
 
 HOST_S6_RC_DEPENDENCIES = host-s6
 
