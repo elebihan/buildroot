@@ -1,33 +1,48 @@
-# From https://static.rust-lang.org/dist/rustc-1.29.2-i686-unknown-linux-gnu.tar.xz.sha256
-sha256 d251b3ade6a66856ff62ea86ed8d34f8cc2a9cd683bf42c3b0c0345f0d955b7c  rustc-1.29.2-i686-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rustc-1.29.2-x86_64-unknown-linux-gnu.tar.xz.sha256
-sha256 b0ea41cd20caf9af62394601b09d2c8b12814293f3cc1247a8c61fb672477499  rustc-1.29.2-x86_64-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-aarch64-unknown-linux-gnu.tar.xz.sha256
-sha256 df62bdb6839e313f8f9c3a92b4de63ba2c37b9c7b534449a392db1ede0f6a741  rust-std-1.29.2-aarch64-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-arm-unknown-linux-gnueabi.tar.xz.sha256
-sha256 7729765dab2945c688d0f10faf313c14aed22f6cfdc96a0a07292292662f260a  rust-std-1.29.2-arm-unknown-linux-gnueabi.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-arm-unknown-linux-gnueabihf.tar.xz.sha256
-sha256 5e4f02edccd013b19b6d03c2a28bff4f81b9cdf7475882e1480aeb21378f93cf  rust-std-1.29.2-arm-unknown-linux-gnueabihf.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-armv7-unknown-linux-gnueabihf.tar.xz.sha256
-sha256 d7e6ba57e790fc4e5d02c0b4b0471178b05341cf932bfc349b90ced9b939209e  rust-std-1.29.2-armv7-unknown-linux-gnueabihf.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-i686-unknown-linux-gnu.tar.xz.sha256
-sha256 4e8c54a54b3060cde9e24d0c32585360098cc75a120543429ccf498d8b83b5d0  rust-std-1.29.2-i686-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-mips-unknown-linux-gnu.tar.xz.sha256
-sha256 556596ac7e2dc462573e8379fd1596dc59394044b3a11f0c50f54642439cf8ab  rust-std-1.29.2-mips-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-mips64-unknown-linux-gnuabi64.tar.xz.sha256
-sha256 8dac2dfc4db7932e6214e98494824453a7be8bb42cf29d5395cc2363fc2fb0c2  rust-std-1.29.2-mips64-unknown-linux-gnuabi64.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-mips64el-unknown-linux-gnuabi64.tar.xz.sha256
-sha256 361d70abfc27b7fdbe8642bc7413f9b55463e90350465de96183ff048fcf149f  rust-std-1.29.2-mips64el-unknown-linux-gnuabi64.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-mipsel-unknown-linux-gnu.tar.xz.sha256
-sha256 8005463e56932bdf272a047281cc20087db68d8fef4cbcf8cf4edf9a2260f8cc  rust-std-1.29.2-mipsel-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-powerpc-unknown-linux-gnu.tar.xz.sha256
-sha256 6cda45f5ee39dbfef95d516a1e0e25744b11d1a8147188b71c21f85f65bca9a9  rust-std-1.29.2-powerpc-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-powerpc64-unknown-linux-gnu.tar.xz.sha256
-sha256 612f175c895a495e401205025805a9e8dffa53b2f105a55f92894b159a87fe28  rust-std-1.29.2-powerpc64-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-powerpc64le-unknown-linux-gnu.tar.xz.sha256
-sha256 16034975bd09b57eb1579b659010f83b869733c9c018c2a189a385fa77923875  rust-std-1.29.2-powerpc64le-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/rust-std-1.29.2-x86_64-unknown-linux-gnu.tar.xz.sha256
-sha256 be16e9db4e39e5e1af0621eea715d13e0fdc56f7b14c3d7310905dc34dfa618a  rust-std-1.29.2-x86_64-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rustc-1.32.0-i686-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rustc-1.32.0-i686-unknown-linux-gnu.tar.xz.asc
+sha256 03be970e941861741fffe7cae3e52a810173c94ce8db9f56feb333f2c90ebe5d  rustc-1.32.0-i686-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rustc-1.32.0-x86_64-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rustc-1.32.0-x86_64-unknown-linux-gnu.tar.xz.asc
+sha256 8f553852579fac6cf7c10f77ea842752caa59a79b5c75f5c2126489d14cbbddd  rustc-1.32.0-x86_64-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-aarch64-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-aarch64-unknown-linux-gnu.tar.xz.asc
+sha256 fc433a7e3313042e5f4237a2512205689701336ea8e5abd60f22fb907cb0e7e8  rust-std-1.32.0-aarch64-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-arm-unknown-linux-gnueabi.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-arm-unknown-linux-gnueabi.tar.xz.asc
+sha256 d676d7471fc103c374d24e5af572f426c32f89212a58f1eb376d704764bbc541  rust-std-1.32.0-arm-unknown-linux-gnueabi.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-arm-unknown-linux-gnueabihf.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-arm-unknown-linux-gnueabihf.tar.xz.asc
+sha256 05936025418a72049cc5ec575de8f5ea2b50d85d98bd3ad91a7b778e1fa19b6b  rust-std-1.32.0-arm-unknown-linux-gnueabihf.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-armv7-unknown-linux-gnueabihf.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-armv7-unknown-linux-gnueabihf.tar.xz.asc
+sha256 837678412cd2ab508997e4dafac6161f28844860571a10843f360c7e0cd94567  rust-std-1.32.0-armv7-unknown-linux-gnueabihf.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-i686-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-i686-unknown-linux-gnu.tar.xz.asc
+sha256 94944e735b116a0d40573d0cedabef6141f87daed0917e8a7088baf101a66108  rust-std-1.32.0-i686-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-mips-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-mips-unknown-linux-gnu.tar.xz.asc
+sha256 57861c802b424ab651769530d90cdd8917f58785d9c5a6d652207583d65d4550  rust-std-1.32.0-mips-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-mips64-unknown-linux-gnuabi64.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-mips64-unknown-linux-gnuabi64.tar.xz.asc
+sha256 c5c0d7a6aa4fcf6e6f9ef2d9c2ee3b8621b647626cff98fe306c42bfedf20f06  rust-std-1.32.0-mips64-unknown-linux-gnuabi64.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-mips64el-unknown-linux-gnuabi64.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-mips64el-unknown-linux-gnuabi64.tar.xz.asc
+sha256 5aae1c159f828da2e4aab29c26233fe35342649b5d67e0f7814b70b63d6b95cb  rust-std-1.32.0-mips64el-unknown-linux-gnuabi64.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-mipsel-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-mipsel-unknown-linux-gnu.tar.xz.asc
+sha256 4238cc41f228fe8c88755929e24c4bf316909581918ca595674660202b7ec8aa  rust-std-1.32.0-mipsel-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-powerpc-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-powerpc-unknown-linux-gnu.tar.xz.asc
+sha256 5e2495162d7d60d0f30cfa4d7a393a7122d09948af581452caaba7eaee3a5b3a  rust-std-1.32.0-powerpc-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-powerpc64-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-powerpc64-unknown-linux-gnu.tar.xz.asc
+sha256 eca8732b74e5b0d1a76f444b3186cf309c38570c369300b173497e1dda879904  rust-std-1.32.0-powerpc64-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-powerpc64le-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-powerpc64le-unknown-linux-gnu.tar.xz.asc
+sha256 b281c20115467429573da6b2b5b7a8863f29e203d7919989e71d91e6914d3bbe  rust-std-1.32.0-powerpc64le-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/rust-std-1.32.0-x86_64-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/rust-std-1.32.0-x86_64-unknown-linux-gnu.tar.xz.asc
+sha256 3cea0fa8c896d19f615a2a9c7f0a59fea1483b9d5f884411b5cdfeec16497562  rust-std-1.32.0-x86_64-unknown-linux-gnu.tar.xz
 # Locally generated
 sha256 a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2  LICENSE-APACHE
 sha256 23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3  LICENSE-MIT
