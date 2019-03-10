@@ -40,6 +40,8 @@ HOST_RUST_POST_EXTRACT_HOOKS += HOST_RUST_EXCLUDE_ORIG_FILES
 
 define HOST_RUST_CONFIGURE_CMDS
 	( \
+		echo '[llvm]'; \
+		echo 'targets = "X86;ARM;AArch64;Mips;PowerPC"'; \
 		echo '[build]'; \
 		echo 'target = ["$(RUSTC_TARGET_NAME)"]'; \
 		echo 'cargo = "$(HOST_CARGO_BIN_DIR)/cargo/bin/cargo"'; \
