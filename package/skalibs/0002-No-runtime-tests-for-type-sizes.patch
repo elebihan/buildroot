@@ -1,4 +1,4 @@
-From f411b502222c8fe442d7b3beb00b530c9e16b7a2 Mon Sep 17 00:00:00 2001
+From 9bf9dadcd19582a0c55c6a28ec94707f9eaa2593 Mon Sep 17 00:00:00 2001
 From: "Van Bemten, Lionel (Nokia - BE/Antwerp)" <lionel.van_bemten@nokia.com>
 Date: Sun, 29 Apr 2018 19:53:40 +0200
 Subject: [PATCH] No runtime tests for type sizes
@@ -11,15 +11,15 @@ This improves support for cross-compilation.
 Signed-off-by: "Van Bemten, Lionel (Nokia - BE/Antwerp)" <lionel.van_bemten@nokia.com>
 Signed-off-by: Eric Le Bihan <eric.le.bihan.dev@free.fr>
 ---
- configure | 75 ++++++++++++++++++++++++++++++++++++++++++++++++++-------------
- 1 file changed, 60 insertions(+), 15 deletions(-)
+ configure | 81 ++++++++++++++++++++++++++++++++++++++++++-------------
+ 1 file changed, 62 insertions(+), 19 deletions(-)
 
 diff --git a/configure b/configure
-index 434eec8..c09e9c8 100755
+index 0ba723d..54d755b 100755
 --- a/configure
 +++ b/configure
-@@ -155,23 +155,69 @@ choose () {
-   fi
+@@ -156,27 +156,70 @@ choose () {
+   echo >> $sysdeps/sysdeps.h
  }
  
 +findtypesize () {
@@ -82,34 +82,32 @@ index 434eec8..c09e9c8 100755
 -  ./output-types >> $sysdeps/sysdeps
 -  ./output-types | grep -F sizeof | while read key value ; do
 -    caps=$(echo $key | sed s/:\$// | tr a-z A-Z)
--    echo "#define ${package_macro_name}_${caps} $value" >> $sysdeps/sysdeps.h
+-    echo "#undef ${package_macro_name}_${caps}"
+-    echo "#define ${package_macro_name}_${caps} $value"
+-    echo
+-  done >> $sysdeps/sysdeps.h
+-  ./output-types | grep -F signed | while read key value ; do
+-    caps=$(echo $key | sed s/:\$// | tr a-z A-Z)
+-    echo "#undef ${package_macro_name}_HASUN${caps}"
+-    echo "#undef ${package_macro_name}_HAS${caps}"
+-    if test $value = yes ; then
+-      echo "#define ${package_macro_name}_HAS${caps}"
+-    else
+-      echo "#define ${package_macro_name}_HASUN${caps}"
+-    fi
+-    echo
+-  done >> $sysdeps/sysdeps.h
 +  for t in "unsigned short" "unsigned int" "unsigned long"; do
 +    abbr=$(echo "$t" | sed -e 's/nsigned //')
 +    findtypesize "$t" "${abbr}"
-   done
--  ./output-types | grep -F signed | while read key value ; do
--    caps=$(echo $key | sed s/:\$// | tr a-z A-Z)
--    if test $value = yes ; then
--      echo "#define ${package_macro_name}_HAS${caps}"
--      echo "#undef ${package_macro_name}_HASUN${caps}"
--    else
--      echo "#undef ${package_macro_name}_HAS${caps}"
--      echo "#define ${package_macro_name}_HASUN${caps}"
--    fi >> $sysdeps/sysdeps.h
++  done
 +  for t in size uid gid pid time dev ino; do
 +    findtypesize "${t}_t" "$t"
 +    findtypesign "${t}_t" "$t"
-   done
++  done
    rm -f output-types
    echo "  ... done"
-@@ -548,7 +594,6 @@ EOF
-   choose cl itimer ITIMER 'setitimer()'
-   choose cl namespaces NAMESPACES 'namespaces'
-   choose cl nsgetparent NSGETPARENT 'NS_GET_PARENT'
--  choose cl explicit_bzero EXPLICIT_BZERO 'explicit_bzero()'
- 
-   echo '#endif' >> $sysdeps/sysdeps.h
- fi
+ }
 -- 
-2.14.3
+2.17.2
 
