@@ -1,4 +1,4 @@
-From d3920dce139734e00bbe4447a16ef24dfe4d704a Mon Sep 17 00:00:00 2001
+From 7defc3f99ea7dcf8208e4c9bd036c4b7283f9ae2 Mon Sep 17 00:00:00 2001
 From: Eric Le Bihan <eric.le.bihan.dev@free.fr>
 Date: Tue, 10 Oct 2017 19:51:02 +0200
 Subject: [PATCH] No runtime tests for endianness
@@ -18,10 +18,10 @@ Signed-off-by: Eric Le Bihan <eric.le.bihan.dev@free.fr>
  create mode 100644 src/sysdeps/trylittleendian.c
 
 diff --git a/configure b/configure
-index f34dcd0..f2a77f3 100755
+index a793676..0ba723d 100755
 --- a/configure
 +++ b/configure
-@@ -478,12 +478,19 @@ EOF
+@@ -499,8 +499,15 @@ EOF
    exec 3>&-
  
    echo "Checking system endianness..."
@@ -37,13 +37,17 @@ index f34dcd0..f2a77f3 100755
 +      fi
 +  fi
    echo "endianness: $endianness" >> $sysdeps/sysdeps
-   echo "#define ${package_macro_name}_ENDIANNESS \"$endianness\"" >> $sysdeps/sysdeps.h
+   {
+     echo "#undef ${package_macro_name}_ENDIANNESS"
+@@ -508,7 +515,7 @@ EOF
+     echo
+   } >> $sysdeps/sysdeps.h
    echo "  ... $endianness"
 -  rm -f tryendianness
 +  rm -f trybigendian trylittleendian
  
    trytypes
-   choose clr accept4 ACCEPT4 'accept4()'
+   choose clr nullispointer NULLISPOINTER 'a pointer-typed NULL'
 diff --git a/src/sysdeps/trybigendian.c b/src/sysdeps/trybigendian.c
 new file mode 100644
 index 0000000..d857572
@@ -92,5 +96,5 @@ index 0000000..68b93c1
 +	return 0;
 +}
 -- 
-2.13.6
+2.17.2
 
