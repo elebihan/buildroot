@@ -1,12 +1,12 @@
-# From https://static.rust-lang.org/dist/cargo-0.33.0-i686-unknown-linux-gnu.tar.xz.sha256
-# Verified using https://static.rust-lang.org/dist/cargo-0.33.0-i686-unknown-linux-gnu.tar.xz.asc
-sha256 13acdb3c9f2505805ceed8a696f5f62ab8cd73e443cd43d6edd588aad88e1c32  cargo-0.33.0-i686-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/cargo-0.33.0-powerpc64le-unknown-linux-gnu.tar.xz.sha256
-# Verified using https://static.rust-lang.org/dist/cargo-0.33.0-powerpc64le-unknown-linux-gnu.tar.xz.asc
-sha256 6628db22370f397676195555d768f0449a60f0a694bcac24611f4cd1cfc97cdc  cargo-0.33.0-powerpc64le-unknown-linux-gnu.tar.xz
-# From https://static.rust-lang.org/dist/cargo-0.33.0-x86_64-unknown-linux-gnu.tar.xz.sha256
-# Verified using https://static.rust-lang.org/dist/cargo-0.33.0-x86_64-unknown-linux-gnu.tar.xz.asc
-sha256 c2c31db68c4dcb50ad856a19e6f11489a0d4df1212f31bd068dfbb73c5425761  cargo-0.33.0-x86_64-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/cargo-0.37.0-i686-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/cargo-0.37.0-i686-unknown-linux-gnu.tar.xz.asc
+sha256 6835a73e2ce17e11eda5393133dd7c78bc41bae5a09784e5327648f14340fd48  cargo-0.37.0-i686-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/cargo-0.37.0-powerpc64le-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/cargo-0.37.0-powerpc64le-unknown-linux-gnu.tar.xz.asc
+sha256 4cda7686160f6981e936229703e8e2e756c74f390245f2ad9e356bbbed28a2c9  cargo-0.37.0-powerpc64le-unknown-linux-gnu.tar.xz
+# From https://static.rust-lang.org/dist/cargo-0.37.0-x86_64-unknown-linux-gnu.tar.xz.sha256
+# Verified using https://static.rust-lang.org/dist/cargo-0.37.0-x86_64-unknown-linux-gnu.tar.xz.asc
+sha256 d20fa121951339d5492cf8862f8a7af59efc99d18f3c27b95ab6d4658b6a7d67  cargo-0.37.0-x86_64-unknown-linux-gnu.tar.xz
 # Locally generated
 sha256 a60eea817514531668d7e00765731449fe14d059d3249e0bc93b36de45f759f2  LICENSE-APACHE
 sha256 23f18e03dc49df91622fe2a76176497404e46ced8a715d9d2b67a7446571cca3  LICENSE-MIT
