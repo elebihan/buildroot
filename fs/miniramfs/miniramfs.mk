@@ -47,7 +47,7 @@ define ROOTFS_MINIRAMFS_BUILD_SKELETON
 	done
 
 	for f in $(ROOTFS_MINIRAMFS_BINS); do \
-		cp -a $(TARGET_DIR)$$f $(ROOTFS_MINIRAMFS_DIR)/fs/bin; \
+		cp -a $(TARGET_DIR)/$$f $(ROOTFS_MINIRAMFS_DIR)/fs/bin; \
 	done
 
 	for f in $$(find $(TARGET_DIR)/bin -type l -lname busybox -printf "%f\n"); do \
@@ -69,8 +69,8 @@ define ROOTFS_MINIRAMFS_BUILD_SKELETON
 	cp -a $(TARGET_DIR)/usr/lib/*.so* $(ROOTFS_MINIRAMFS_DIR)/fs/lib
 	find $(ROOTFS_MINIRAMFS_DIR) -name '*.py' -delete
 
-	find $(ROOTFS_MINIRAMFS_DIR)/fs/bin $(ROOTFS_MINIRAMFS_DIR)/fs/lib \
-		\( -type f -o -type l -executable -o -name '*.so*' \) \
+	find $(ROOTFS_MINIRAMFS_DIR)/fs/bin \
+		\( -type f -o -type l -executable \) \
 		-exec objdump -p {} \; \
 	| awk '/NEEDED /{ print $$2 }' \
 	| sort \
@@ -78,7 +78,21 @@ define ROOTFS_MINIRAMFS_BUILD_SKELETON
 	| while read f; do \
 		echo $$f; \
 		readlink $(ROOTFS_MINIRAMFS_DIR)/fs/lib/$$f; \
-	done > $(ROOTFS_MINIRAMFS_DIR)/required-libs.txt
+	done > $(ROOTFS_MINIRAMFS_DIR)/required-libs-pass1.txt
+
+	find $(ROOTFS_MINIRAMFS_DIR)/fs/lib -name '*.so*' \
+	| grep -Ff $(ROOTFS_MINIRAMFS_DIR)/required-libs-pass1.txt \
+	| xargs objdump -p \
+	| awk '/NEEDED /{ print $$2 }' \
+	| sort \
+	| uniq \
+	| while read f; do \
+		echo $$f; \
+		readlink $(ROOTFS_MINIRAMFS_DIR)/fs/lib/$$f; \
+	done > $(ROOTFS_MINIRAMFS_DIR)/required-libs-pass2.txt
+
+	sort $(ROOTFS_MINIRAMFS_DIR)/required-libs-pass*.txt \
+	| uniq > $(ROOTFS_MINIRAMFS_DIR)/required-libs.txt
 
 	find $(ROOTFS_MINIRAMFS_DIR)/fs/lib -name '*.so*' \
 	| grep -vFf $(ROOTFS_MINIRAMFS_DIR)/required-libs.txt \
@@ -91,8 +105,8 @@ endef
 
 ifneq ($(ROOTFS_MINIRAMFS_OVERLAY),)
 define ROOTFS_MINIRAMFS_COPY_OVERLAY
-	rsync -a --chmod=u=rwX,go=rX $(RSYNC_VCS_EXCLUSIONS) \
-		$(ROOTFS_MINIRAMFS_OVERLAY)/ $(ROOTFS_MINIRAMFS_DIR)/fs/
+	@$(call MESSAGE,"Copying MINIRAMFS overlay")
+	$(call SYSTEM_RSYNC,$(ROOTFS_MINIRAMFS_OVERLAY),$(ROOTFS_MINIRAMFS_DIR)/fs)
 endef
 endif
 
@@ -112,7 +126,7 @@ endef
 $(BINARIES_DIR)/miniramfs.cpio: target-finalize $$(ROOTFS_MINIRAMFS_DEPENDENCIES)
 	$(ROOTFS_MINIRAMFS_BUILD_CMDS)
 
-rootfs-miniramfs: $(BINARIES_DIR)/miniramfs.cpio $(ROOTFS_MINIRAMFS_POST_TARGETS)
+rootfs-miniramfs: $(BINARIES_DIR)/miniramfs.cpio $(ROOTFS_MINIRAMFS_POST_TARGETS) linux-rebuild-with-initramfs
 
 rootfs-miniramfs-show-depends:
 	@echo $(ROOTFS_MINIRAMFS_DEPENDENCIES)
