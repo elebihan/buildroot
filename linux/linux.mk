@@ -129,8 +129,10 @@ endif
 
 ifeq ($(BR2_TARGET_ROOTFS_MINIRAMFS),y)
 LINUX_INITRAMFS_CPIO = miniramfs.cpio
+LINUX_INITRAMFS_REBUILD_DEPS = $(BINARIES_DIR)/miniramfs.cpio
 else
 LINUX_INITRAMFS_CPIO = rootfs.cpio
+LINUX_INITRAMFS_REBUILD_DEPS = rootfs-cpio
 endif
 
 # We don't want to run depmod after installing the kernel. It's done in a
@@ -574,7 +576,7 @@ $(eval $(kconfig-package))
 .PHONY: linux-rebuild-with-initramfs
 linux-rebuild-with-initramfs: $(LINUX_DIR)/.stamp_target_installed
 linux-rebuild-with-initramfs: $(LINUX_DIR)/.stamp_images_installed
-linux-rebuild-with-initramfs: rootfs-cpio
+linux-rebuild-with-initramfs: $(LINUX_INITRAMFS_REBUILD_DEPS)
 linux-rebuild-with-initramfs:
 	@$(call MESSAGE,"Rebuilding kernel with initramfs")
 	# Build the kernel.
