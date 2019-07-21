@@ -10,7 +10,7 @@ RUST_SITE = https://static.rust-lang.org/dist
 RUST_LICENSE = Apache-2.0 or MIT
 RUST_LICENSE_FILES = LICENSE-APACHE LICENSE-MIT
 
-HOST_RUST_PROVIDES = host-rustc
+HOST_RUST_PROVIDES = host-rustc host-cargo
 
 HOST_RUST_DEPENDENCIES = \
 	toolchain \
@@ -38,6 +38,25 @@ endef
 
 HOST_RUST_POST_EXTRACT_HOOKS += HOST_RUST_EXCLUDE_ORIG_FILES
 
+ifeq ($(BR2_PACKAGE_HOST_RUST_CARGO),y)
+
+define HOST_RUST_ENABLE_CARGO
+	echo 'extended = true'; \
+	echo 'tools = ["cargo"]';
+endef
+
+define HOST_RUST_INSTALL_CARGO
+	find $(@D)/build/tmp/dist -maxdepth 2 -wholename '*cargo*/install.sh' \
+		-exec {} --prefix=$(HOST_DIR) --disable-ldconfig \;
+
+endef
+
+HOST_RUST_POST_INSTALL_HOOKS += \
+	HOST_RUST_INSTALL_CARGO \
+	HOST_CARGO_INSTALL_CONFIG
+
+endif
+
 define HOST_RUST_CONFIGURE_CMDS
 	( \
 		echo '[build]'; \
@@ -47,11 +66,13 @@ define HOST_RUST_CONFIGURE_CMDS
 		echo 'python = "$(HOST_DIR)/bin/python2"'; \
 		echo 'submodules = false'; \
 		echo 'vendor = true'; \
+		$(HOST_RUST_ENABLE_CARGO) \
 		echo 'compiler-docs = false'; \
 		echo 'docs = false'; \
 		echo 'verbose = $(HOST_RUST_VERBOSITY)'; \
 		echo '[install]'; \
 		echo 'prefix = "$(HOST_DIR)"'; \
+		echo 'sysconfdir = "$(HOST_DIR)/etc"'; \
 		echo '[rust]'; \
 		echo 'channel = "stable"'; \
 		echo '[target.$(RUSTC_TARGET_NAME)]'; \
