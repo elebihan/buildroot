@@ -1,9 +1,16 @@
 config BR2_PACKAGE_HOST_CARGO
 	bool "host cargo"
 	depends on BR2_PACKAGE_HOST_RUSTC_ARCH_SUPPORTS
-	select BR2_PACKAGE_HOST_RUSTC
 	help
 	  Cargo is the package manager for the Rust programming
-	  language.
+	  language
 
 	  https://crates.io/
+
+config BR2_PACKAGE_HAS_HOST_CARGO
+	bool
+
+config BR2_PACKAGE_PROVIDES_HOST_CARGO
+	string
+	depends on BR2_PACKAGE_HAS_HOST_CARGO
+	depends on BR2_PACKAGE_HOST_RUSTC_ARCH_SUPPORTS
