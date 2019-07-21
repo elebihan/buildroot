@@ -7,10 +7,29 @@ config BR2_PACKAGE_HOST_CARGO
 
 	  https://crates.io/
 
+if BR2_PACKAGE_HOST_CARGO
+
+choice
+	prompt "Cargo provider"
+	help
+	  Select a Cargo package manager provider
+
+config BR2_PACKAGE_HOST_CARGO_BIN
+	bool "host cargo (pre-built)"
+	depends on BR2_PACKAGE_HOST_RUST_BIN
+	select BR2_PACKAGE_HAS_HOST_CARGO
+	help
+	  This package will install a pre-built version of Cargo.
+
+endchoice
+
+endif
+
 config BR2_PACKAGE_HAS_HOST_CARGO
 	bool
 
 config BR2_PACKAGE_PROVIDES_HOST_CARGO
 	string
 	depends on BR2_PACKAGE_HAS_HOST_CARGO
+	default "host-cargo-bin" if !BR2_PACKAGE_HOST_RUST
 	depends on BR2_PACKAGE_HOST_RUSTC_ARCH_SUPPORTS
