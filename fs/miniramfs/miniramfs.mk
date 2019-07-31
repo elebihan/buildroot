@@ -14,11 +14,11 @@ ROOTFS_MINIRAMFS_DEPENDENCIES = target-finalize busybox
 
 ROOTFS_MINIRAMFS_DIR = $(BUILD_DIR)/miniramfs
 
-ROOTFS_MINIRAMFS_BINS = /bin/busybox 
+ROOTFS_MINIRAMFS_BINS = /bin/busybox
 
 ifeq ($(BR2_PACKAGE_MTD),y)
 ROOTFS_MINIRAMFS_DEPENDENCIES += mtd
-ROOTFS_MINIRAMFS_BINS = \
+ROOTFS_MINIRAMFS_BINS += \
 	/usr/sbin/ubiattach \
 	/usr/sbin/ubidetach \
 
