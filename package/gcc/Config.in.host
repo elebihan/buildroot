@@ -115,6 +115,16 @@ config BR2_TOOLCHAIN_BUILDROOT_FORTRAN
 	  Fortran language and you want Fortran libraries to be
 	  installed on your target system.
 
+config BR2_TOOLCHAIN_BUILDROOT_DLANG
+	bool "Enable D language support"
+	depends on BR2_TOOLCHAIN_GCC_AT_LEAST_9
+	depends on BR2_TOOLCHAIN_USES_GLIBC
+	select BR2_TOOLCHAIN_HAS_DLANG
+	help
+	  Enable this option if you want your toolchain to support the
+	  D language and you want D libraries to be installed on your
+	  target system.
+
 config BR2_GCC_ENABLE_LTO
 	bool "Enable compiler link-time-optimization support"
 	select BR2_BINUTILS_ENABLE_LTO
