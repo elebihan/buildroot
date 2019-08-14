@@ -1,0 +1,10 @@
+config BR2_PACKAGE_HOST_DUB_BIN
+	bool "host-dub-bin"
+	depends on BR2_HOSTARCH = "x86_64" || BR2_HOSTARCH = "x86"
+	depends on BR2_TOOLCHAIN_HAS_DLANG
+	help
+	  Package and build manager for D applications and libraries.
+
+	  This package the binary host variant.
+
+	  https://github.com/dlang/dub
