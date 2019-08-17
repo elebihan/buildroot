@@ -4,8 +4,9 @@
 #
 ################################################################################
 
-XVISOR_VERSION = 0.2.9
+XVISOR_VERSION = 0.2.11
 XVISOR_SITE = http://www.xhypervisor.org/tarball
+XVISOR_SOURCE = xvisor-$(XVISOR_VERSION).tar.xz
 XVISOR_LICENSE = GPL-2.0+
 XVISOR_LICENSE_FILES = COPYING
 XVISOR_INSTALL_IMAGES = YES
