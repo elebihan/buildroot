@@ -152,7 +152,7 @@ define ROOTFS_MINIRAMFS_BUILD_CMDS
 endef
 
 # The generic fs infrastructure is not very useful here
-$(BINARIES_DIR)/miniramfs.cpio: target-finalize $$(ROOTFS_MINIRAMFS_DEPENDENCIES)
+$(BINARIES_DIR)/miniramfs.cpio: target-finalize $(ROOTFS_MINIRAMFS_DEPENDENCIES)
 	$(ROOTFS_MINIRAMFS_BUILD_CMDS)
 
 rootfs-miniramfs: $(BINARIES_DIR)/miniramfs.cpio $(ROOTFS_MINIRAMFS_POST_TARGETS) linux-rebuild-with-initramfs
