@@ -65,19 +65,36 @@ define ROOTFS_MINIRAMFS_BUILD_SKELETON
 
 	ln -sf /bin/sh $(ROOTFS_MINIRAMFS_DIR)/fs/sbin/init
 
-	cp -a $(TARGET_DIR)/lib/*.so* $(ROOTFS_MINIRAMFS_DIR)/fs/lib
-	cp -a $(TARGET_DIR)/usr/lib/*.so* $(ROOTFS_MINIRAMFS_DIR)/fs/lib
+	find $(TARGET_DIR)/lib \( -name '*.so' -o -name '*.so.*' \) \
+		| while read f; do \
+			d=$$(dirname $$f | sed -e 's!$(TARGET_DIR)!$(ROOTFS_MINIRAMFS_DIR)/fs!g'); \
+			mkdir -p $$d; \
+			cp -a $$f $$d; \
+		done
+
+	find $(TARGET_DIR)/usr/lib \( -name '*.so' -o -name '*.so.*' \) \
+		| while read f; do \
+			d=$$(dirname $$f | sed -e 's!$(TARGET_DIR)/usr!$(ROOTFS_MINIRAMFS_DIR)/fs!g'); \
+			mkdir -p $$d; \
+			cp -a $$f $$d; \
+		done
+
 	find $(ROOTFS_MINIRAMFS_DIR) -name '*.py' -delete
 
-	find $(ROOTFS_MINIRAMFS_DIR)/fs/bin \
-		\( -type f -o -type l -executable \) \
-		-exec objdump -p {} \; \
+	find $(ROOTFS_MINIRAMFS_DIR)/fs/bin $(ROOTFS_MINIRAMFS_DIR)/fs/lib \
+		\( -type f -o -type l -executable -o -name '*.so*' \) \
+		-exec file {} \; \
+	| grep -i elf \
+	| cut -d: -f1 \
+	| xargs objdump -p \
 	| awk '/NEEDED /{ print $$2 }' \
 	| sort \
 	| uniq \
 	| while read f; do \
 		echo $$f; \
-		readlink $(ROOTFS_MINIRAMFS_DIR)/fs/lib/$$f; \
+		if [ -L $(ROOTFS_MINIRAMFS_DIR)/fs/lib/$$f ]; then \
+			readlink $(ROOTFS_MINIRAMFS_DIR)/fs/lib/$$f; \
+		fi; \
 	done > $(ROOTFS_MINIRAMFS_DIR)/required-libs-pass1.txt
 
 	find $(ROOTFS_MINIRAMFS_DIR)/fs/lib -name '*.so*' \
@@ -88,7 +105,9 @@ define ROOTFS_MINIRAMFS_BUILD_SKELETON
 	| uniq \
 	| while read f; do \
 		echo $$f; \
-		readlink $(ROOTFS_MINIRAMFS_DIR)/fs/lib/$$f; \
+		if [ -L $(ROOTFS_MINIRAMFS_DIR)/fs/lib/$$f ]; then \
+			readlink $(ROOTFS_MINIRAMFS_DIR)/fs/lib/$$f; \
+		fi; \
 	done > $(ROOTFS_MINIRAMFS_DIR)/required-libs-pass2.txt
 
 	sort $(ROOTFS_MINIRAMFS_DIR)/required-libs-pass*.txt \
@@ -98,8 +117,8 @@ define ROOTFS_MINIRAMFS_BUILD_SKELETON
 	| grep -vFf $(ROOTFS_MINIRAMFS_DIR)/required-libs.txt \
 	| xargs rm -f
 
-	$(STRIPCMD) $(ROOTFS_MINIRAMFS_DIR)/fs/bin/*
-	$(STRIPCMD) $(ROOTFS_MINIRAMFS_DIR)/fs/lib/*
+	find $(ROOTFS_MINIRAMFS_DIR)/fs/bin -type f -executable -exec $(STRIPCMD) {} \;
+	find $(ROOTFS_MINIRAMFS_DIR)/fs/lib -name '*.so' -exec $(STRIPCMD) {} \;
 
 endef
 
