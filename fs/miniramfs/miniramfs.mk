@@ -130,9 +130,19 @@ endef
 endif
 
 define ROOTFS_MINIRAMFS_BUILD_CPIO
+	echo '#!/bin/sh' > $(ROOTFS_MINIRAMFS_DIR)/fakeroot
+	echo 'set -e' >> $(ROOTFS_MINIRAMFS_DIR)/fakeroot
+	echo 'mkdir -p $(ROOTFS_MINIRAMFS_DIR)/fs/dev' >> $(ROOTFS_MINIRAMFS_DIR)/fakeroot
+	echo 'pushd $(ROOTFS_MINIRAMFS_DIR)/fs/dev/ > /dev/null 2>&1' >> $(ROOTFS_MINIRAMFS_DIR)/fakeroot
+	echo '/bin/mknod -m 622 console c 5 1' >> $(ROOTFS_MINIRAMFS_DIR)/fakeroot
+	echo '/bin/mknod -m 644 kmsg c 11 1' >> $(ROOTFS_MINIRAMFS_DIR)/fakeroot
+	echo 'popd > /dev/null 2>&1' >> $(ROOTFS_MINIRAMFS_DIR)/fakeroot
+	chmod a+x $(ROOTFS_MINIRAMFS_DIR)/fakeroot
+	PATH=$(BR_PATH) $(HOST_DIR)/bin/fakeroot -- $(ROOTFS_MINIRAMFS_DIR)/fakeroot
 	(cd $(ROOTFS_MINIRAMFS_DIR)/fs && \
-		 ((find; echo /dev/console; echo /dev/kmsg) | cpio -oH newc) \
+		 (find | cpio -oH newc) \
 	) > $(BINARIES_DIR)/miniramfs.cpio
+	rm -f $(MINIRAMFS_DIR)/fakeroot
 endef
 
 define ROOTFS_MINIRAMFS_BUILD_CMDS
