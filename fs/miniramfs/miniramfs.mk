@@ -54,7 +54,7 @@ define ROOTFS_MINIRAMFS_BUILD_SKELETON
 		ln -sf busybox $(ROOTFS_MINIRAMFS_DIR)/fs/bin/$$f; \
 	done
 
-	for f in switch_root mdev blkid losetup; do \
+	for f in switch_root mdev blkid losetup reboot; do \
 		ln -sf ../bin/busybox $(ROOTFS_MINIRAMFS_DIR)/fs/sbin/$$f; \
 	done
 
