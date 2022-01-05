@@ -151,6 +151,11 @@ config BR2_PACKAGE_HOST_RUST_BIN
 
 endchoice
 
+config BR2_PACKAGE_HOST_RUSTC_USE_NIGHTLY
+	bool "Use Nightly channel"
+	help
+	  Use nightly channel instead of stable one.
+
 endif
 
 config BR2_PACKAGE_PROVIDES_HOST_RUSTC
