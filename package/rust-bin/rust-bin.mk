@@ -4,8 +4,13 @@
 #
 ################################################################################
 
+ifeq ($(BR2_PACKAGE_HOST_RUSTC_USE_NIGHTLY),y)
 RUST_BIN_VERSION = nightly
+RUST_BIN_SITE = https://static.rust-lang.org/dist/2021-09-20
+else
+RUST_BIN_VERSION = 1.54.0
 RUST_BIN_SITE = https://static.rust-lang.org/dist
+endif
 RUST_BIN_LICENSE = Apache-2.0 or MIT
 RUST_BIN_LICENSE_FILES = LICENSE-APACHE LICENSE-MIT
 
