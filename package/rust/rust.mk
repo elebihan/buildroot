@@ -4,9 +4,14 @@
 #
 ################################################################################
 
+ifeq ($(BR2_PACKAGE_HOST_RUSTC_USE_NIGHTLY),y)
 RUST_VERSION = nightly
-RUST_SOURCE = rustc-$(RUST_VERSION)-src.tar.xz
+RUST_SITE = https://static.rust-lang.org/dist/2021-09-20
+else
+RUST_VERSION = 1.54.0
 RUST_SITE = https://static.rust-lang.org/dist
+endif
+RUST_SOURCE = rustc-$(RUST_VERSION)-src.tar.xz
 RUST_LICENSE = Apache-2.0 or MIT
 RUST_LICENSE_FILES = LICENSE-APACHE LICENSE-MIT
 
